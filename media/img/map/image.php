@@ -16,7 +16,7 @@ $border = array(
 
 header('Content-type: image/png');
 
-$image = imagecreatefromjpeg('main/' . $type . '/' . $main . '.jpeg');
+$image = imagecreatefromjpeg('main/' . $type . '/' . $main . '.jpg');
 
 $borderRight = imagecreatefrompng('border/right/' . $border['rightType'] . '/' . $border['right'] . '.png');
 
