@@ -47,7 +47,7 @@
 							<th>EXP: </th>
 							<td style="min-width: 100px;">
 								<div class="progress">
-									<div style="color: black; position: absolute;">
+									<div class="progress-text">
 										<span id="actEXP">0</span> / <span id="maxEXP">100</span>
 									</div>
 									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
@@ -65,7 +65,7 @@
 							<th>TP: </th>
 							<td style="min-width: 100px;">
 								<div class="progress">
-									<div style="color: black; position: absolute;">
+									<div class="progress-text">
 										<span id="actTP">100</span> / <span id="maxTP">100</span>
 									</div>
 									<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
@@ -89,5 +89,8 @@
 	</div>
 	<div id="game-popup-background"></div>
 	<div id="game-popup"></div>
+	<div id="game-help-background"></div>
+	<div id="game-help"></div>
+	<img class="hidden" id="hero-image" src="media/img/player/hero1.png">
 </body>
 </html>

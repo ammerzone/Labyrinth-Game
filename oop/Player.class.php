@@ -19,6 +19,11 @@ class Player{
 				'x' => 	0, 
 				'y' => 	0
 			), 
+			'settings' => array(
+				'sound' => 		'on', 
+				'effects' => 	'on', 
+				'help' => 		'on'
+			),
 			'stats' => array(
 				'speed' => 	100, 
 				'atk' => 	10, 
@@ -30,7 +35,7 @@ class Player{
 				'gold' => 	0
 			), 
 			'equiped' => array(
-				'sword' => 		'', 
+				'weapon' => 	'', 
 				'shield' => 	'',
 				'armour' => 	''
 			), 

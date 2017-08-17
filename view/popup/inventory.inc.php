@@ -30,8 +30,11 @@ unset($data);
 <h2>Inventar</h2>
 
 <div class="inventory-scroll">
+	<?php if(sizeof($inventory) === 0): ?>
+		<p>Du besitzt noch keine Gegenstände, geh hinaus in die weite Welt und Sammle Dinge auf.</p>
+	<?php endif; ?>
 	<?php foreach($inventory as $item => $amount): ?>
-		<div style="border:1px solid; border-radius: 5px; padding: 5px; margin-top: 10px; margin-bottom: 10px;">
+		<div class="inventory-item">
 			<?php $data = $items->get($item); ?>
 			<table>
 				<tr>

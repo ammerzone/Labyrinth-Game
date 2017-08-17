@@ -1,18 +1,33 @@
 <?php
 $height = 		512;
 $width = 		512;
-$borderWidth = 	32;
-$borderHeight = 32;
+$borderWidth = 	64;
+$borderHeight = 64;
 
-$main = isset($_GET['main']) ? $_GET['main'] : 1;
-$type = isset($_GET['type']) ? $_GET['type'] : 'ground';
+$main = isset($_GET['main']) ? $_GET['main'] : 0;
+$type = isset($_GET['type']) ? $_GET['type'] : 'wall';
 
 $border = array(
-	'right' => 		isset($_GET['borderRight']) ? 		$_GET['borderRight'] : 		1, 
-	'rightType' => 	isset($_GET['borderRightType']) ? 	$_GET['borderRightType'] : 	'ground', 
-	'bottom' => 	isset($_GET['borderBottom']) ? 		$_GET['borderBottom'] : 	1, 
-	'bottomType' => isset($_GET['borderBottomType']) ? 	$_GET['borderBottomType'] : 'ground'
+	'right' => 		isset($_GET['borderRight']) ? 		$_GET['borderRight'] : 		0, 
+	'rightType' => 	isset($_GET['borderRightType']) ? 	$_GET['borderRightType'] : 	'wall', 
+	'bottom' => 	isset($_GET['borderBottom']) ? 		$_GET['borderBottom'] : 	0, 
+	'bottomType' => isset($_GET['borderBottomType']) ? 	$_GET['borderBottomType'] : 'wall'
 );
+
+if(!file_exists('main/' . $type . '/' . $main . '.jpg')){
+	$main = 0;
+	$type = 'wall';
+}
+
+if(!file_exists('border/right/' . $border['rightType'] . '/' . $border['right'] . '.png')){
+	$border['right'] = 0;
+	$border['rightType'] = 'wall';
+}
+
+if(!file_exists('border/bottom/' . $border['bottomType'] . '/' . $border['bottom'] . '.png')){
+	$border['bottom'] = 0;
+	$border['bottomType'] = 'wall';
+}
 
 header('Content-type: image/png');
 

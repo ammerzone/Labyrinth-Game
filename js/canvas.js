@@ -1,5 +1,7 @@
 var gameCanvas, 
 	gameContext, 
+	heroCanvas, 
+	heroContext, 
 	updates, 
 	imgDir, 
 	img, 
@@ -9,7 +11,10 @@ var gameCanvas,
 	character, 
 	xPos, 
 	yPos, 
-	inputKey;
+	inputKey, 
+	isRunning = false,
+	runDirection = 'down', 
+	helpEvent;
 
 requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
 window.addEventListener('load', eventWindowLoaded, false); 
@@ -20,14 +25,16 @@ function eventWindowLoaded(){
 		
 		inputKey;
 		
+		helpEvent = 'start',
+		
 		gameCreate();
 		gameMain(Date.now());
 	});
 }
 
 var gameCreate = function(){
-	gameCanvas = document.createElement("canvas");
-	gameContext = gameCanvas.getContext("2d");
+	gameCanvas = document.createElement('canvas');
+	gameContext = gameCanvas.getContext('2d');
 	
 	gameCanvas.width = window.innerWidth;
 	gameCanvas.height = window.innerHeight;
@@ -39,7 +46,57 @@ var gameCreate = function(){
 	gameContext.lineWidth = 	1;
 
 	$('div#game-canvas').append(gameCanvas);
+	
+	heroCreate();
 };
+
+var heroCreate = function(){
+	$('<canvas id="game-hero"></canvas>').insertAfter('div#game-canvas canvas');
+	
+	$('#game-hero').css({
+		position: 'fixed', 
+		left: '50%', 
+		top: '50%', 
+		marginLeft: '-16px', 
+		marginTop: '-24px', 
+		width: '32px', 
+		height: '48px'
+	});
+	
+	heroCanvas = document.getElementById('game-hero');
+	heroCanvas.width = '32';
+	heroCanvas.height = '48';
+	
+	heroContext = heroCanvas.getContext('2d');
+	
+	heroContext.fillStyle = '#00FFFF';
+	
+	var heroImage = new Image();
+	heroImage.src = 'media/img/player/hero1.png';
+	
+	var i = 1;
+	
+	var heroOffsetY = 0;
+	
+	if(runDirection === 'down'){
+		heroOffsetY = 0;
+	}
+	
+	if(runDirection === 'left'){
+		heroOffsetY = 1;
+	}
+	
+	if(runDirection === 'right'){
+		heroOffsetY = 2;
+	}
+	
+	if(runDirection === 'up'){
+		heroOffsetY = 3;
+	}
+	
+	heroContext.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+	heroContext.drawImage(heroImage, (32 * (i % 4)), 0, 32, 48, 0, 0, 32, 48);
+}
 
 var gameDefaults = function(){
 	updates = 	false;
@@ -84,6 +141,11 @@ var gameDefaults = function(){
 			lvl: 	1, 
 			gold: 	0
 		}, 
+		settings: {
+			sound: 		'on',
+			effects: 	'on',
+			help: 		'on'
+		},
 		equiped: {
 			sword: 		'',
 			shield: 	'',
@@ -91,9 +153,6 @@ var gameDefaults = function(){
 		}, 
 		items: {}
 	};
-	
-	xPos = character.position.x;
-	yPos = character.position.y;
 	
 	$.ajax({
 		type: 		'post', 
@@ -104,7 +163,6 @@ var gameDefaults = function(){
 	}).done(function(data){
 		if('status' in data){
 			if(data.status === false){
-				alert(JSON.stringify(data));
 				return;
 			}
 		}
@@ -225,6 +283,9 @@ var gameDefaults = function(){
 			character.items = data.items;
 		}
 	});
+	
+	xPos = map.start.x;//character.position.x;
+	yPos = map.start.y;//character.position.y;
 };
 
 var gameUpdate = function(){
@@ -347,7 +408,8 @@ var gameRender = function(){
 	gameContext.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 	
 	// Load Map
-	var x=0, y=0;
+	var x=0, 
+		y=0;
 	
 	var mapImage = new Array();
 	for(i = ((xPos >= 2) ? (xPos - 2) : 0); i <= xPos + 2; i++){
@@ -358,10 +420,28 @@ var gameRender = function(){
 		for(j = ((yPos >= 2) ? (yPos - 2) : 0); j <= yPos + 2; j++){
 			mapImage[i][j] = new Image();
 			
-			var texture = 	map.field[i + ':' + j].texture;
-			var type = 		map.field[i + ':' + j].type;
+			var texture = '0';
+			var type = 'ground';
 			
-			mapImage[i][j].src = 'media/img/map/image.php?main=' + texture + '&type=' + type;
+			if(typeof map.field[i + ':' + j] != 'undefined'){
+				if('texture' in map.field[i + ':' + j]){
+					var texture = map.field[i + ':' + j].texture;
+				}
+				
+				if('type' in map.field[i + ':' + j]){
+					var type = map.field[i + ':' + j].type;
+				}
+			}
+			
+			var srcfile = 'media/img/map/image.php';
+			srcfile += '?main=' + texture;
+			srcfile += '&type=' + type;
+			srcfile += '&borderRight=' + getTexture(i + 1, j);
+			srcfile += '&borderRightType=' + getType(i + 1, j);
+			srcfile += '&borderBottom=' + getTexture(i, j + 1);
+			srcfile += '&borderBottomType=' + getType(i, j + 1);
+			
+			mapImage[i][j].src = srcfile;
 			gameContext.drawImage(
 				mapImage[i][j], 
 				0, 
@@ -378,19 +458,8 @@ var gameRender = function(){
 		y++;
 	}
 	
-	// Load Hero
-	var playerImg = new Image();
-	playerImg.src = "media/img/player/hero.png";
-	gameContext.drawImage(
-		playerImg, 
-		(gameCanvas.width / 2) - (character.image.width / 2), 
-		(gameCanvas.height / 2) - (character.image.height / 2), 
-		character.image.width, 
-		character.image.height
-		);
-	
 	if(renderCounter <= 1){
-		//ovenActionListener(gameCanvas.width, gameCanvas.height);
+		gameActionListener();
 	}
 };
 
@@ -414,3 +483,47 @@ var gameMain = function(tick){
 		});
 	}
 };
+
+function gameActionListener(){
+	if(character.settings.help === 'on'){
+		if(helpEvent != ''){
+			var helpFile = 'view/help/';
+			
+			switch(helpEvent){
+				case 'start': 
+					helpFile += 'start.php'; 
+					break;
+				default: 
+					helpFile += 'start.php'; 
+					break;
+			}
+			
+			$('#game-help-background').show();
+			$('#game-help').load(helpFile, function(){
+				$('#game-help').show();
+			});
+			
+			helpEvent = '';
+		}
+	}
+}
+
+function getTexture(x, y){
+	if(typeof map.field[x + ':' + y] != 'undefined'){
+		if('texture' in map.field[x + ':' + y]){
+			return map.field[x + ':' + y].texture;
+		}
+	}
+	
+	return 0;
+}
+
+function getType(x, y){
+	if(typeof map.field[x + ':' + y] != 'undefined'){
+		if('type' in map.field[x + ':' + y]){
+			return map.field[x + ':' + y].type;
+		}
+	}
+	
+	return 'wall';
+}

@@ -13,14 +13,14 @@ class Map{
 			'width' => 		50, 
 			'height' => 	30, 
 			'ground' => 	array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), 
-			'wall' => 		array(0, 1, 2, 3, 4, 5), 
+			'wall' => 		array(0), 
 			'start' => 		array(
-				'char' => 	'#', 
+				'char' => 	'0', 
 				'x' => 		0, 
 				'y' => 		0
 			), 
 			'end' => 		array(
-				'char' => 	'$', 
+				'char' => 	'0', 
 				'x' => 		0, 
 				'y' => 		0
 			), 
@@ -296,12 +296,18 @@ class Map{
 			if($lastPath != NULL){
 				// 90% set same texture, 10% set new random texture
 				if(rand(0, 9) === 0){
-					$texture = $this->lab[$type][rand(0, sizeof($this->lab[$type]) - 1)];
+					//if(sizeof($this->lab[$type]) > 1){
+					//	$texture = $this->lab[$type][rand(0, sizeof($this->lab[$type]) - 1)];
+					//}else{
+						$texture = 0;
+					//}
 				}else{
-					$texture = $lastPath;
+					$texture = 0;//$lastPath;
 				}
 			
 				array_push($path, $texture);
+			}else{
+				$texture = 0;
 			}
 			
 			// fill field on act position
