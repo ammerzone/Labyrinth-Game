@@ -159,27 +159,13 @@ $(function(){
 			'</div>'
 		);
 		
-		$('#game-help').css({
-			left: '50%', 
-			top: '15vh', 
-			marginLeft: '-' + ($('#game-help').width() / 2) + 'px'
-		});
-		
 		$('#game-help-background').show();
 		$('#game-help').show();
 		
 		$('#game-help').load('view/help/start.inc.php', function(){
 			$('#game-help').hide();
 			
-			$('#game-help').css({
-				left: '50%', 
-				top: '15vh', 
-				marginLeft: '-' + ($('#game-help').width() / 2) + 'px'
-			});
-			
-			$('#game-help').slideDown(400, function(){
-				$('#game-help').append('<div class="text-center"><div class="btn btn-default buttonClose">Schließen</div></div>');
-			});
+			$('#game-help').slideDown(400);
 		});
 	});
 	
