@@ -107,6 +107,10 @@ body{
 	color: #000000;
 }
 
+#game-help .buttonClose{
+	color: #222222 !important;
+}
+
 .navButton{
 	background: #DDDDDD;
 	margin-left: 10px;

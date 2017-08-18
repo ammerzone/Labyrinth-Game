@@ -466,6 +466,9 @@ var gameRender = function(){
 var gameMain = function(tick){
 	var tick_new = Date.now();
 	
+	gameCanvas.width = window.innerWidth;
+	gameCanvas.height = window.innerHeight;
+	
 	//if changements
 	if(updates === true){
 		renderCounter = 0;
@@ -491,16 +494,26 @@ function gameActionListener(){
 			
 			switch(helpEvent){
 				case 'start': 
-					helpFile += 'start.php'; 
+					helpFile += 'start'; 
 					break;
 				default: 
-					helpFile += 'start.php'; 
+					helpFile += 'start'; 
 					break;
 			}
 			
+			helpFile += '.inc.php';
+			
 			$('#game-help-background').show();
 			$('#game-help').load(helpFile, function(){
-				$('#game-help').show();
+				$('#game-help').css({
+					left: '50%', 
+					top: '15vh', 
+					marginLeft: '-' + ($('#game-help').width() / 2) + 'px'
+				});
+				
+				$('#game-help').slideDown(400, function(){
+					$('#game-help').append('<div class="text-center"><div class="btn btn-default buttonClose">Schließen</div></div>');
+				});
 			});
 			
 			helpEvent = '';

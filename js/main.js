@@ -139,6 +139,50 @@ $(function(){
 		});
 	});
 	
+	$('#buttonHelp').on('click', function(e){
+		e.preventDefault();
+		
+		$('#game-help').html(
+			'<div class="loadingSpinner-circle">' + 
+				'<div class="loadingSpinner-circle1 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle2 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle3 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle4 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle5 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle6 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle7 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle8 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle9 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle10 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle11 loadingSpinner-child"></div>' + 
+				'<div class="loadingSpinner-circle12 loadingSpinner-child"></div>' + 
+			'</div>'
+		);
+		
+		$('#game-help').css({
+			left: '50%', 
+			top: '15vh', 
+			marginLeft: '-' + ($('#game-help').width() / 2) + 'px'
+		});
+		
+		$('#game-help-background').show();
+		$('#game-help').show();
+		
+		$('#game-help').load('view/help/start.inc.php', function(){
+			$('#game-help').hide();
+			
+			$('#game-help').css({
+				left: '50%', 
+				top: '15vh', 
+				marginLeft: '-' + ($('#game-help').width() / 2) + 'px'
+			});
+			
+			$('#game-help').slideDown(400, function(){
+				$('#game-help').append('<div class="text-center"><div class="btn btn-default buttonClose">Schließen</div></div>');
+			});
+		});
+	});
+	
 	$(document).on('click', '#game-popup .buttonClose, #game-popup-background', function(e){
 		e.preventDefault();
 		
@@ -163,6 +207,16 @@ $(function(){
 		// update file + html
 		
 		alert('delete');
+	});
+	
+	$(document).on('click', '#game-help-background, #game-help .buttonClose', function(e){
+		e.preventDefault();
+		
+		$('#game-help-background').hide();
+		
+		$('#game-help').fadeOut(400);
+		
+		$('#game-help').html();
 	});
 });
 

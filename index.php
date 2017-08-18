@@ -83,6 +83,9 @@
 					<li class="">
 						<a class="navButton" id="buttonHighscore"><span class="glyphicon glyphicon-king" title="Highscore"></span></a>
 					</li>
+					<li class="">
+						<a class="navButton" id="buttonHelp"><span class="glyphicon glyphicon-question-sign" title="Hilfe"></span></a>
+					</li>
 				</ul>
 			</div>
 		</div>
