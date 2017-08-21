@@ -172,16 +172,68 @@ $(function(){
 		alert('delete');
 	});
 	
-	$(document).on('click', '#game-help-background, #game-help .buttonClose', function(e){
+	$(document).on('click', '#game-help #game-item-collect', function(e){
 		e.preventDefault();
+		
+		// collect item
+		battleMonster($(this).attr('data-x'), $(this).attr('data-y'));
 		
 		$('#game-help-background').hide();
 		
-		$('#game-help').fadeOut(400);
+		$('#game-help').fadeOut(400, function(){
+			helpEvent = null;
+		});
 		
 		$('#game-help').html();
 		
 		helpEvent = null;
+	});
+	
+	$(document).on('click', '#game-help #game-start-battle', function(e){
+		e.preventDefault();
+		
+		// battle
+		battleMonster($(this).attr('data-x'), $(this).attr('data-y'));
+		
+		$('#game-help-background').hide();
+		
+		$('#game-help').fadeOut(400, function(){
+			helpEvent = null;
+		});
+		
+		$('#game-help').html();
+	});
+	
+	$(document).on('click', '#game-help #game-next-level', function(e){
+		e.preventDefault();
+		
+		// delete map
+		// add map
+		createMap();
+		
+		$('#game-help-background').hide();
+		
+		$('#game-help').fadeOut(400, function(){
+			helpEvent = null;
+		});
+		
+		$('#game-help').html();
+		
+		helpEvent = null;
+	});
+	
+	$(document).on('click', '#game-help-background, #game-help .buttonClose', function(e){
+		e.preventDefault();
+		
+		if($('#game-help #game-start-battle').length === 0 && $('#game-help #game-item-collect').length === 0 && $('#game-help #game-nect-level').length === 0){
+			$('#game-help-background').hide();
+			
+			$('#game-help').fadeOut(400, function(){
+				helpEvent = null;
+			});
+			
+			$('#game-help').html();
+		}
 	});
 });
 

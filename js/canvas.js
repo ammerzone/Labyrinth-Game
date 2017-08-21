@@ -42,7 +42,46 @@ function eventWindowLoaded(){
 
 function loadAudios(){
 	return {
-		soundtrack: null, 
-		running: 	null
+		soundtrack: 	null, 
+		running: 		null,
+		hitting: 		null, 
+		defending: 		null, 
+		dying: 			null, 
+		collecting: 	null, 
+		monster: 		null
 	};
+}
+
+function battleMonster(){
+	// open battle window
+	// load...
+	// loop:
+		// i hit monster -> monster hp down
+		// monster hit me -> my hp down
+		// if: monster hp <= 0 -> win (break loop)
+		// if: my hp <= 0 -> lose (break loop)
+	// if won: popup with button -> delete monster, add exp
+	// if lost: popup with button -> save to highscore, reset hero, create map
+	// close battle window
+	
+	helpEvent = null;
+}
+
+function collectItem(){
+	// open item window (animation)
+	// add item to player list
+	// delete item from map list
+	// click button to close item window
+	
+	helpEvent = null;
+}
+
+function createMap(){
+	// open window
+	// loading spinner + text
+	// close window
+	
+	// refresh site
+	
+	helpEvent = null;
 }

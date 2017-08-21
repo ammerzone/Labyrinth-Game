@@ -244,36 +244,38 @@ var gamePositionate = function(modifier){
 	/* RUNNING */
 		isRunning = false;
 		
-		// Run up
-		if(input.isDown('UP') || input.isDown('w')){
-			isRunning = 	true;
-			runDirection = 	'up';
+		if(helpEvent === null){
+			// Run up
+			if(input.isDown('UP') || input.isDown('w')){
+				isRunning = 	true;
+				runDirection = 	'up';
+				
+				map.y -= (character.stats.speed * modifier);
+			}
 			
-			map.y -= (character.stats.speed * modifier);
-		}
-		
-		// Run left
-		if(input.isDown('LEFT') || input.isDown('a')){
-			isRunning = 	true;
-			runDirection = 	'left';
+			// Run left
+			if(input.isDown('LEFT') || input.isDown('a')){
+				isRunning = 	true;
+				runDirection = 	'left';
+				
+				map.x -= character.stats.speed * modifier;
+			}
 			
-			map.x -= character.stats.speed * modifier;
-		}
-		
-		// Run down
-		if(input.isDown('DOWN') || input.isDown('s')){
-			isRunning = 	true;
-			runDirection = 	'down';
+			// Run down
+			if(input.isDown('DOWN') || input.isDown('s')){
+				isRunning = 	true;
+				runDirection = 	'down';
+				
+				map.y += character.stats.speed * modifier;
+			}
 			
-			map.y += character.stats.speed * modifier;
-		}
-		
-		// Run right
-		if(input.isDown('RIGHT') || input.isDown('d')){
-			isRunning = 	true;
-			runDirection = 	'right';
-			
-			map.x += character.stats.speed * modifier;
+			// Run right
+			if(input.isDown('RIGHT') || input.isDown('d')){
+				isRunning = 	true;
+				runDirection = 	'right';
+				
+				map.x += character.stats.speed * modifier;
+			}
 		}
 	/* END RUNNING */
 	
@@ -456,29 +458,44 @@ var gameAction = function(){
 	) <= 100){ 
 		// Check if monster
 		if(hasMonster(xPos, yPos)){
-			if(helpEvent != 'open'){
-				helpEvent = 'monster';
+			if(character.settings.help === 'on'){
+				if(helpEvent != 'open'){
+					helpEvent = 'monster';
+				}
+				
+				renderCounter = 1;
+			}else{
+				helpEvent = 'open';
+				battleMonster(xPos, yPos);
 			}
-			
-			renderCounter = 1;
 		}
 		
 		// Check if item
 		if(hasItem(xPos, yPos)){
-			if(helpEvent != 'open'){
-				helpEvent = 'item';
+			if(character.settings.help === 'on'){
+				if(helpEvent != 'open'){
+					helpEvent = 'item';
+				}
+				
+				renderCounter = 1;
+			}else{
+				helpEvent = 'open';
+				collectItem(xPos, yPos);
 			}
-			
-			renderCounter = 1;
 		}
 		
 		// Check if end
 		if(isEnd(xPos, yPos)){
-			if(helpEvent != 'open'){
-				helpEvent = 'end';
+			if(character.settings.help === 'on'){
+				if(helpEvent != 'open'){
+					helpEvent = 'end';
+				}
+				
+				renderCounter = 1;
+			}else{
+				helpEvent = 'open';
+				createMap();
 			}
-			
-			renderCounter = 1;
 		}
 	}
 	
@@ -611,5 +628,11 @@ function hasMonster(x, y){
 }
 
 function isEnd(x, y){
+	if(typeof map.field[x + ':' + y] != 'undefined'){
+		if('type' in map.field[x + ':' + y]){
+			return (map.field[x + ':' + y].type === 'end');
+		}
+	}
 	
+	return false;
 }
