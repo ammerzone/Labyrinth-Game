@@ -21,10 +21,11 @@ var heroCreate = function(){
 	gameAudio.running.setAttribute('id', 'game-audio-running');
 	gameAudio.running.setAttribute('src', 'media/audio/running.mp3');
 	
-	gameAudio.running.autoplay = 	true;
-	gameAudio.running.loop = 		true;
-	gameAudio.running.muted = 		true;
-	gameAudio.running.volume = 		1;
+	gameAudio.running.autoplay = 		true;
+	gameAudio.running.loop = 			true;
+	gameAudio.running.muted = 			true;
+	gameAudio.running.volume = 			1;
+	gameAudio.running.playbackRate = 	2;
 }
 
 var heroUpdate = function(){

@@ -394,13 +394,14 @@ var gameRender = function(){
 				512
 			);
 			
-			gameContext.beginPath();
 			
 			if(hasItem(i, j) != false && hasItem(i, j) != 'false'){
 				mapImage['item'][i][j] = new Image();
 				
 				//mapImage['item'][i][j].src = 'media/img/item/' + hasItem(i, j) + '.png';
 				
+				gameContext.beginPath();
+				gameContext.fillStyle = 'blue';
 				gameContext.arc(
 					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
 					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
@@ -408,6 +409,7 @@ var gameRender = function(){
 					0,
 					2 * Math.PI
 				);
+				gameContext.fill();
 				/*
 				gameContext.drawImage(
 					mapImage[i][j], 
@@ -428,6 +430,8 @@ var gameRender = function(){
 				
 				//mapImage['monster'][i][j].src = 'media/img/monster/' + hasItem(i, j) + '.png';
 				
+				gameContext.beginPath();
+				gameContext.fillStyle = 'red';
 				gameContext.arc(
 					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
 					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
@@ -435,9 +439,8 @@ var gameRender = function(){
 					0,
 					2 * Math.PI
 				);
+				gameContext.fill();
 			}
-			
-			//gameContext.fill();
 			
 			x++;
 		}
@@ -452,21 +455,30 @@ var gameAction = function(){
 		Math.pow(parseInt(map.y) - parseInt(yPos), 2)
 	) <= 100){ 
 		// Check if monster
-		if(hasItem(xPos, yPos)){
-			helpEvent = 	'monster';
+		if(hasMonster(xPos, yPos)){
+			if(helpEvent != 'open'){
+				helpEvent = 'monster';
+			}
+			
 			renderCounter = 1;
 		}
 		
 		// Check if item
 		if(hasItem(xPos, yPos)){
-			helpEvent = 	'item';
+			if(helpEvent != 'open'){
+				helpEvent = 'item';
+			}
+			
 			renderCounter = 1;
 		}
 		
 		// Check if end
 		if(isEnd(xPos, yPos)){
-			helpEvent = 	'end';
-			renderCounder = 1;
+			if(helpEvent != 'open'){
+				helpEvent = 'end';
+			}
+			
+			renderCounter = 1;
 		}
 	}
 	
@@ -500,7 +512,7 @@ var gameMain = function(){
 
 function gameActionListener(){
 	if(character.settings.help === 'on'){
-		if(helpEvent != null){
+		if(helpEvent != null && helpEvent != 'open'){
 			var helpFile = 'view/help/';
 			
 			switch(helpEvent){
@@ -549,7 +561,7 @@ function gameActionListener(){
 				$('#game-help').slideDown(400);
 			});
 			
-			helpEvent = null;
+			helpEvent = 'open';
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <h3>Item gefunden</h3>
 <div class="panel panel-default">
 	<div class="panel-body">
-		"<i>Huch, was liegt den da? Hat da etwa jemand etwas verloren? Ich kann diesen Gegenstand gut gebrauchen...</i>"
+		"<i>Huch, was liegt denn da? Hat da etwa jemand etwas verloren? Ich kann diesen Gegenstand gut gebrauchen...</i>"
 	</div>
 </div>
 <p>
