@@ -14,11 +14,12 @@ var gameCanvas,
 	inputKey, 
 	isRunning = false,
 	runDirection = 'down', 
-	helpEvent, 
+	helpEvent = null, 
 	heroImage, 
 	heroOffsetX = 0, 
 	heroOffsetY = 0, 
-	gameTick = Date.now();
+	gameTick = Date.now(), 
+	gameAudio = loadAudios();
 
 requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
 window.addEventListener('load', eventWindowLoaded, false); 
@@ -37,4 +38,11 @@ function eventWindowLoaded(){
 		heroMain();
 		gameMain();
 	});
+}
+
+function loadAudios(){
+	return {
+		soundtrack: null, 
+		running: 	null
+	};
 }

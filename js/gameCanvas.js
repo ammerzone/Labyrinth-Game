@@ -13,6 +13,16 @@ var gameCreate = function(){
 	gameContext.lineWidth = 	1;
 
 	$('div#game-canvas').append(gameCanvas);
+	
+	gameAudio.soundtrack = document.createElement('audio');
+	
+	gameAudio.soundtrack.setAttribute('id', 'game-audio-soundtrack');
+	gameAudio.soundtrack.setAttribute('src', 'media/audio/map.mp3');
+	
+	gameAudio.soundtrack.autoplay = 	true;
+	gameAudio.soundtrack.loop = 		true;
+	gameAudio.soundtrack.muted = 		false;
+	gameAudio.soundtrack.volume = 		0.15;
 };
 
 var gameDefaults = function(){
@@ -231,132 +241,126 @@ var gameUpdate = function(){
 };
 
 var gamePositionate = function(modifier){
-	//KOORDINATEN UND POSITION NEU DEFINIEREN
-	if(map.y < -256){
-		map.y += 512;
-		yPos--;
+	/* RUNNING */
+		isRunning = false;
 		
-		// check if monster
-		// check if item
-	}
-	
-	if(map.y > 256){
-		map.y -= 512;
-		yPos++;
-		
-		// check if monster
-		// check if item
-	}
-	
-	if(map.x < -256){
-		map.x += 512;
-		xPos--;
-		
-		// check if monster
-		// check if item
-	}
-	
-	if(map.x > 256){
-		map.x -= 512;
-		xPos++;
-		
-		// check if monster
-		// check if item
-	}
-	
-	//RUN
-	isRunning = false;
-	
-	if(input.isDown('UP') || input.isDown('w')){
-		isRunning = 	true;
-		runDirection = 	'up';
-		
-		/*
-		var tmp = new Image;
-		
-		var verschiebung = Math.round(yPos - (map.y + (character.stats.speed * modifier)) / 512);
-		
-		var texture = map.field[xPos + ':' + ((map.y>=0)?(yPos):(verschiebung))].texture;
-		var type = map.field[xPos + ':' + ((map.y>=0)?(yPos):(verschiebung))].type;
-		
-		tmp.src = 'media/img/map/image.php?main=' + texture + '&type=' + type; 
-		if(tmp.complete){
+		// Run up
+		if(input.isDown('UP') || input.isDown('w')){
+			isRunning = 	true;
+			runDirection = 	'up';
+			
 			map.y -= (character.stats.speed * modifier);
 		}
-		*/
-		map.y -= (character.stats.speed * modifier);
-	}
-	if(input.isDown('LEFT') || input.isDown('a')){
-		isRunning = 	true;
-		runDirection = 	'left';
 		
-		/*
-		var tmp = new Image;
-		
-		var verschiebung = Math.round(xPos - (map.x + (character.stats.speed * modifier)) / 512);
-		
-		tmp.src = "media/img/map/["+((map.x>=0)?(xPos):(verschiebung))+"]["+yPos+"].png"; 
-		if(tmp.complete){
+		// Run left
+		if(input.isDown('LEFT') || input.isDown('a')){
+			isRunning = 	true;
+			runDirection = 	'left';
+			
 			map.x -= character.stats.speed * modifier;
 		}
-		*/
-		map.x -= character.stats.speed * modifier;
-	}
-	if(input.isDown('DOWN') || input.isDown('s')){
-		isRunning = 	true;
-		runDirection = 	'down';
 		
-		/*
-		var tmp = new Image;
-		
-		var verschiebung = Math.floor(yPos + (map.y + (character.stats.speed * modifier)) / 256);
-		
-		tmp.src = "media/img/map/["+xPos+"]["+((map.y>=0)?(verschiebung):(yPos))+"].png"; 
-		if(tmp.complete){
+		// Run down
+		if(input.isDown('DOWN') || input.isDown('s')){
+			isRunning = 	true;
+			runDirection = 	'down';
+			
 			map.y += character.stats.speed * modifier;
 		}
-		*/
-		map.y += character.stats.speed * modifier;
-	}
-	if(input.isDown('RIGHT') || input.isDown('d')){
-		isRunning = 	true;
-		runDirection = 	'right';
 		
-		/*
-		var tmp = new Image;
-		
-		var verschiebung = Math.floor(xPos + (map.x + (character.speed * modifier)) / 256);
-		
-		tmp.src = "media/img/map/["+((map.x>=0)?(verschiebung):(xPos))+"]["+yPos+"].png";
-		if(tmp.complete){
+		// Run right
+		if(input.isDown('RIGHT') || input.isDown('d')){
+			isRunning = 	true;
+			runDirection = 	'right';
+			
 			map.x += character.stats.speed * modifier;
 		}
-		*/
-		map.x += character.stats.speed * modifier;
-	}
+	/* END RUNNING */
+	
+	/* CALIBRATE KOORDINATES AND POSITION */
+		// Change y-position (up)
+		if(map.y < -256 - (0.5 * 64)){
+			// Check if not wall -> walkable
+			if(getType(xPos, (+yPos - +1)) != 'wall'){
+				map.y += 512;
+				yPos--;
+			}else{
+				// Texture (256px) + 0.5 * Texture transition (64px)
+				if(map.y <= -256 - (0.5 * 64)){
+					map.y = -256 - (0.5 * 64);
+				}
+			}
+		}
+		
+		// Change y-position (down)
+		if(map.y > 256 - (0.5 * 64)){
+			// Check if not wall -> walkable
+			if(getType(xPos, (+yPos + +1)) != 'wall'){
+				map.y -= 512;
+				yPos++;
+			}else{
+				// Texture (256px) + 0.5 * Texture transition (64px)
+				if(map.y >= 256 - (0.5 * 64)){
+					map.y = 256 - (0.5 * 64);
+				}
+			}
+		}
+		
+		// Change x-position (left)
+		if(map.x < -256 - (0.5 * 64)){
+			// Check if not wall -> walkable
+			if(getType((+xPos - +1), yPos) != 'wall'){
+				map.x += 512;
+				xPos--;
+			}else{
+				// Texture (256px) + 0.5 * Texture transition (64px)
+				if(map.x <= -256 - (0.5 * 64)){
+					map.x = -256 - (0.5 * 64);
+				}
+			}
+		}
+		
+		// Change x-position (right)
+		if(map.x > 256 - (0.5 * 64)){
+			// Check if not wall -> walkable
+			if(getType((+xPos + +1), yPos) != 'wall'){
+				map.x -= 512;
+				xPos++;
+			}else{
+				// Texture (256px) + 0.5 * Texture transition (64px)
+				if(map.x >= 256 - (0.5 * 64)){
+					map.x = 256 - (0.5 * 64);
+				}
+			}
+		}
+	/* END CALIBRATION */
 }
 
 var gameRender = function(){
 	renderCounter++;
 	
 	gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-	gameContext.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 	
-	// Load Map
 	var x=0, 
 		y=0;
 	
 	var mapImage = new Array();
-	for(i = ((xPos >= 2) ? (xPos - 2) : 0); (i - 2) <= xPos; i++){
+	
+	mapImage['monster'] = 	new Array();
+	mapImage['item'] = 		new Array();
+	
+	for(i = (xPos - 2); (i - 2) <= xPos; i++){
 		x=0;
 		
-		mapImage[i] = new Array();
+		mapImage[i] = 				new Array();
+		mapImage['monster'][i] = 	new Array();
+		mapImage['item'][i] = 		new Array();
 		
-		for(j = ((yPos >= 2) ? (yPos - 2) : 0); (j - 2) <= yPos; j++){
+		for(j = (yPos - 2); (j - 2) <= yPos; j++){
 			mapImage[i][j] = new Image();
 			
 			var texture = '0';
-			var type = 'ground';
+			var type = 'wall';
 			
 			if(typeof map.field[i + ':' + j] != 'undefined'){
 				if('texture' in map.field[i + ':' + j]){
@@ -377,6 +381,7 @@ var gameRender = function(){
 			srcfile += '&borderBottomType=' + getType(i, j + 1);
 			
 			mapImage[i][j].src = srcfile;
+			
 			gameContext.drawImage(
 				mapImage[i][j], 
 				0, 
@@ -388,15 +393,88 @@ var gameRender = function(){
 				512,
 				512
 			);
+			
+			gameContext.beginPath();
+			
+			if(hasItem(i, j) != false && hasItem(i, j) != 'false'){
+				mapImage['item'][i][j] = new Image();
+				
+				//mapImage['item'][i][j].src = 'media/img/item/' + hasItem(i, j) + '.png';
+				
+				gameContext.arc(
+					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
+					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
+					100, 
+					0,
+					2 * Math.PI
+				);
+				/*
+				gameContext.drawImage(
+					mapImage[i][j], 
+					0, 
+					0, 
+					512, 
+					512, 
+					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + ((512 - 200) / 2), 
+					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + ((512 - 200) / 2), 
+					200,
+					200
+				);
+				*/
+			}
+			
+			if(hasMonster(i, j) != false && hasMonster(i, j) != 'false'){
+				mapImage['monster'][i][j] = new Image();
+				
+				//mapImage['monster'][i][j].src = 'media/img/monster/' + hasItem(i, j) + '.png';
+				
+				gameContext.arc(
+					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
+					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
+					100, 
+					0,
+					2 * Math.PI
+				);
+			}
+			
+			//gameContext.fill();
+			
 			x++;
 		}
 		y++;
 	}
+};
+
+var gameAction = function(){
+	// Get collect radius
+	if(Math.sqrt(
+		Math.pow(parseInt(map.x) - parseInt(xPos), 2) + 
+		Math.pow(parseInt(map.y) - parseInt(yPos), 2)
+	) <= 100){ 
+		// Check if monster
+		if(hasItem(xPos, yPos)){
+			helpEvent = 	'monster';
+			renderCounter = 1;
+		}
+		
+		// Check if item
+		if(hasItem(xPos, yPos)){
+			helpEvent = 	'item';
+			renderCounter = 1;
+		}
+		
+		// Check if end
+		if(isEnd(xPos, yPos)){
+			helpEvent = 	'end';
+			renderCounder = 1;
+		}
+	}
 	
+	// Add action listener
 	if(renderCounter <= 1){
 		gameActionListener();
 	}
-};
+}
 
 var gameMain = function(){
 	var tick = Date.now();
@@ -413,21 +491,30 @@ var gameMain = function(){
 	
 	$.when(gamePositionate((tick - gameTick) / 1000)).done(function(){
 		gameRender();
+		gameAction();
 		
 		gameTick = tick;
 		requestAnimationFrame(gameMain);
 	});
 };
 
-
 function gameActionListener(){
 	if(character.settings.help === 'on'){
-		if(helpEvent != ''){
+		if(helpEvent != null){
 			var helpFile = 'view/help/';
 			
 			switch(helpEvent){
 				case 'start': 
 					helpFile += 'start'; 
+					break;
+				case 'item': 
+					helpFile += 'item'; 
+					break;
+				case 'monster': 
+					helpFile += 'monster'; 
+					break;
+				case 'end': 
+					helpFile += 'end'; 
 					break;
 				default: 
 					helpFile += 'start'; 
@@ -462,7 +549,7 @@ function gameActionListener(){
 				$('#game-help').slideDown(400);
 			});
 			
-			helpEvent = '';
+			helpEvent = null;
 		}
 	}
 }
@@ -485,4 +572,32 @@ function getType(x, y){
 	}
 	
 	return 'wall';
+}
+
+function hasItem(x, y){
+	if(typeof map.field[x + ':' + y] != 'undefined'){
+		if('item' in map.field[x + ':' + y]){
+			if(map.field[x + ':' + y].item.length > 0){
+				return map.field[x + ':' + y].item;
+			}
+		}
+	}
+	
+	return false;
+}
+
+function hasMonster(x, y){
+	if(typeof map.field[x + ':' + y] != 'undefined'){
+		if('monster' in map.field[x + ':' + y]){
+			if(map.field[x + ':' + y].monster.length > 0){
+				return map.field[x + ':' + y].monster;
+			}
+		}
+	}
+	
+	return false;
+}
+
+function isEnd(x, y){
+	
 }

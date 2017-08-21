@@ -13,16 +13,9 @@
   
 	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	
-	<link rel="stylesheet" href="css/main.css">
-	
-	<script src="js/main.js"></script>
-	<script src="js/canvas.js"></script>
-	<script src="js/gameCanvas.js"></script>
-	<script src="js/heroCanvas.js"></script>
-	<script src="js/ajax.js"></script>
 </head>
 <body>
+	<audio src="media/audio/running.mp3" id="game-audio-running" muted></audio>
 	<div class="" id="game-canvas"></div>
 	<div class="" id="game-navigation">
 		<div class="container">
@@ -97,5 +90,12 @@
 	<div id="game-help-background"></div>
 	<div id="game-help"></div>
 	<img class="hidden" id="hero-image" src="media/img/player/hero1.png">
+	
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/main.js"></script>
+	<script src="js/canvas.js"></script>
+	<script src="js/gameCanvas.js"></script>
+	<script src="js/heroCanvas.js"></script>
+	<script src="js/ajax.js"></script>
 </body>
 </html>
