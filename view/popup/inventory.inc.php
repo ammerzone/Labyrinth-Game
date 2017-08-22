@@ -32,6 +32,7 @@ unset($data);
 <div class="inventory-scroll">
 	<?php if(sizeof($inventory) === 0): ?>
 		<p>Du besitzt noch keine Gegenstände, geh hinaus in die weite Welt und Sammle Dinge auf.</p>
+		<p>Bewege dich in die Nähe eines Gegenstands um es aufzusammeln und deinem Inventar hinzuzufügen.</p>
 	<?php endif; ?>
 	<?php foreach($inventory as $item => $amount): ?>
 		<div class="inventory-item">

@@ -8,6 +8,7 @@ class Highscore{
 	
 	private function getDefault(){
 		return array(
+			'id' => 	'', 
 			'name' => 	'',
 			'date' => 	'', 
 			'lvl' => 	'', 
@@ -41,10 +42,54 @@ class Highscore{
 	}
 	
 	public function edit($params){
-		if(!isset($params['name']) || !isset($params['date']) || !isset($params['lvl']) || !isset($params['exp'])){
-			return false;
+		$arr = array();
+		
+		$foundPlace = false;
+		$i = 0;
+		
+		foreach($this->get() as $key => $data){
+			$i++;
+			
+			if($foundPlace === false){
+				if($data['exp'] < $params['exp']){
+					
+					array_push($arr, $params);
+					
+					$foundPlace = true;
+					$i++;
+				}elseif(intval($data['exp']) === intval($params['exp'])){
+					if(intval($data['lvl']) < intval($params['lvl'])){
+						array_push($arr, $params);
+						
+						$foundPlace = true;
+						$i++;
+					}
+				}
+			}
+			
+			if($foundPlace === false || $data['id'] != $params['id']){
+				array_push($arr, $data);
+			}
 		}
 		
+		if($i < 100 && $foundPlace === false){
+			array_push($arr, $params);
+		}
+		
+		$f = fopen($this->file, 'wb');
+		
+		foreach($arr as $key => $value){
+			$line = 	'id:' . preg_replace('#\r|\n#', '', $value['id']) . ',';
+			$line .= 	'name:' . preg_replace('#\r|\n#', '', $value['name']) . ',';
+			$line .= 	'date:' . date('d.m.Y', time()) . ',';
+			$line .= 	'lvl:' . preg_replace('#\r|\n#', '', $value['lvl']) . ',';
+			$line .= 	'exp:' . preg_replace('#\r|\n#', '', $value['exp']);
+			
+			fwrite($f, $line . PHP_EOL);
+		}
+		
+		fclose($f);
+		/*
 		$f = fopen($this->file, 'wb');
 		
 		$i = 0;
@@ -75,7 +120,7 @@ class Highscore{
 				
 				$lineText = '';
 				$lineText .= 'name:' . $params['name'] . ',';
-				$lineText .= 'date:' . $params['date'] . ',';
+				$lineText .= 'date:' . date('d.m.Y', time()) . ',';
 				$lineText .= 'lvl:' . $params['lvl'] . ',';
 				$lineText .= 'exp:' . $params['exp'];
 				
@@ -86,7 +131,7 @@ class Highscore{
 		}
 		
 		fclose($f);
-		
+		*/
 		return true;
 	}
 	

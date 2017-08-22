@@ -1,1 +1,2 @@
-Spinne,tp:100,atk:10,def:5,exp:200,gold:50
+Spinne,tp:20,atk:5,def:3,exp:100,gold:50
+Drache,tp:50,atk:15,def:10,exp:500,gold:300

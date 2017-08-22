@@ -175,24 +175,25 @@ $(function(){
 	$(document).on('click', '#game-help #game-item-collect', function(e){
 		e.preventDefault();
 		
-		// collect item
-		battleMonster($(this).attr('data-x'), $(this).attr('data-y'));
+		var x = $(this).attr('data-x');
+		var y = $(this).attr('data-y');
 		
 		$('#game-help-background').hide();
 		
 		$('#game-help').fadeOut(400, function(){
 			helpEvent = null;
+			
+			// Collect item
+			collectItem(x, y);
 		});
 		
 		$('#game-help').html();
-		
-		helpEvent = null;
 	});
 	
 	$(document).on('click', '#game-help #game-start-battle', function(e){
 		e.preventDefault();
 		
-		// battle
+		// Start battle procedure
 		battleMonster($(this).attr('data-x'), $(this).attr('data-y'));
 		
 		$('#game-help-background').hide();

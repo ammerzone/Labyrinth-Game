@@ -17,6 +17,10 @@ if($session === NULL){
 
 $map = new Map($session, '../media/game');
 
-echo json_encode($map->get());
+echo json_encode(
+	array(
+		'status' => $map->delete()
+	)
+);
 die();
 ?>

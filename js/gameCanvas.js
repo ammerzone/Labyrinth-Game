@@ -13,16 +13,6 @@ var gameCreate = function(){
 	gameContext.lineWidth = 	1;
 
 	$('div#game-canvas').append(gameCanvas);
-	
-	gameAudio.soundtrack = document.createElement('audio');
-	
-	gameAudio.soundtrack.setAttribute('id', 'game-audio-soundtrack');
-	gameAudio.soundtrack.setAttribute('src', 'media/audio/map.mp3');
-	
-	gameAudio.soundtrack.autoplay = 	true;
-	gameAudio.soundtrack.loop = 		true;
-	gameAudio.soundtrack.muted = 		false;
-	gameAudio.soundtrack.volume = 		0.15;
 };
 
 var gameDefaults = function(){
@@ -85,6 +75,9 @@ var gameDefaults = function(){
 		type: 		'post', 
 		url: 		'ajax/getMap.ajax.php', 
 		dataType: 	'json', 
+		data: 		{
+			session: gameId
+		}, 
 		cache: 		false,
         async: 		false
 	}).done(function(data){
@@ -132,6 +125,9 @@ var gameDefaults = function(){
 		type: 		'post', 
 		url: 		'ajax/getPlayer.ajax.php', 
 		dataType: 	'json', 
+		data: 		{
+			session: gameId
+		}, 
 		cache: 		false,
         async: 		false
 	}).done(function(data){
@@ -221,20 +217,23 @@ var gameUpdate = function(){
 	
 	$.when(gameDefaults()).done(function(){
 		$.ajax({
-			type: 'post', 
-			url: 'ajax/gameUpdate.ajax.php', 
-			dataType: 'json', 
-			cache: false,
-			data: {}, 
-			success: function(data){
+			type: 		'post', 
+			url: 		'ajax/gameUpdate.ajax.php', 
+			dataType: 	'json', 
+			data: 		{
+				session: gameId
+			}, 
+			cache: 		false,
+			async: 		false,
+			success: 	function(data){
 				if(data.status === true){
 					
 				}else{
-					//alert(JSON.stringify(data));
+					alert(JSON.stringify(data));
 				}
 			}, 
-			error: function(data){
-				//alert(JSON.stringify(data));
+			error: 		function(data){
+				alert(JSON.stringify(data));
 			}
 		});
 	});
@@ -398,50 +397,58 @@ var gameRender = function(){
 			
 			
 			if(hasItem(i, j) != false && hasItem(i, j) != 'false'){
-				mapImage['item'][i][j] = new Image();
-				
-				//mapImage['item'][i][j].src = 'media/img/item/' + hasItem(i, j) + '.png';
-				
-				gameContext.beginPath();
-				gameContext.fillStyle = 'blue';
-				gameContext.arc(
-					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
-					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
-					100, 
-					0,
-					2 * Math.PI
-				);
-				gameContext.fill();
-				/*
-				gameContext.drawImage(
-					mapImage[i][j], 
-					0, 
-					0, 
-					512, 
-					512, 
-					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + ((512 - 200) / 2), 
-					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + ((512 - 200) / 2), 
-					200,
-					200
-				);
-				*/
+				if(typeof itemCanvas[i + ':' + j] === 'undefined'){ 
+					itemCanvas[i + ':' + j] = itemSprite({
+						id: 'item-animation-' + i + '-' + j
+					});
+					
+					itemCanvas[i + ':' + j].positionate(
+						- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256), 
+						- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256)
+					);
+					itemCanvas[i + ':' + j].render();
+					itemCanvas[i + ':' + j].loop();
+				}else{
+					itemCanvas[i + ':' + j].positionate(
+						- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256), 
+						- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256)
+					);
+				}
+			}else{
+				if(typeof itemCanvas[i + ':' + j] != 'undefined'){ 
+					itemCanvas[i + ':' + j].delete();
+					itemCanvas.splice(i + ':' + j);
+					
+					$('#item-animation-' + i + '-' + j).detach();
+				}
 			}
 			
 			if(hasMonster(i, j) != false && hasMonster(i, j) != 'false'){
-				mapImage['monster'][i][j] = new Image();
-				
-				//mapImage['monster'][i][j].src = 'media/img/monster/' + hasItem(i, j) + '.png';
-				
-				gameContext.beginPath();
-				gameContext.fillStyle = 'red';
-				gameContext.arc(
-					- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256) + (512 / 2), 
-					- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256) + (512 / 2), 
-					100, 
-					0,
-					2 * Math.PI
-				);
-				gameContext.fill();
+				if(typeof monsterCanvas[i + ':' + j] === 'undefined'){ 
+					monsterCanvas[i + ':' + j] = monsterSprite({
+						id: 		'monster-animation-' + i + '-' + j, 
+						monster: 	hasMonster(i, j)
+					});
+					
+					monsterCanvas[i + ':' + j].positionate(
+						- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256), 
+						- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256)
+					);
+					monsterCanvas[i + ':' + j].render();
+					monsterCanvas[i + ':' + j].loop();
+				}else{
+					monsterCanvas[i + ':' + j].positionate(
+						- map.x + ((i - xPos) * 512 + (gameCanvas.width / 2) - 256), 
+						- map.y + ((j - yPos) * 512 + (gameCanvas.height / 2) - 256)
+					);
+				}
+			}else{
+				if(typeof monsterCanvas[i + ':' + j] != 'undefined'){ 
+					monsterCanvas[i + ':' + j].delete();
+					monsterCanvas.splice(i + ':' + j);
+					
+					$('#monster-animation-' + i + '-' + j).detach();
+				}
 			}
 			
 			x++;
@@ -455,7 +462,7 @@ var gameAction = function(){
 	if(Math.sqrt(
 		Math.pow(parseInt(map.x) - parseInt(xPos), 2) + 
 		Math.pow(parseInt(map.y) - parseInt(yPos), 2)
-	) <= 100){ 
+	) <= 100){
 		// Check if monster
 		if(hasMonster(xPos, yPos)){
 			if(character.settings.help === 'on'){
@@ -501,7 +508,7 @@ var gameAction = function(){
 	
 	// Add action listener
 	if(renderCounter <= 1){
-		gameActionListener();
+		gameActionListener(xPos, yPos);
 	}
 }
 
@@ -527,7 +534,7 @@ var gameMain = function(){
 	});
 };
 
-function gameActionListener(){
+function gameActionListener(x, y){
 	if(character.settings.help === 'on'){
 		if(helpEvent != null && helpEvent != 'open'){
 			var helpFile = 'view/help/';
@@ -550,7 +557,7 @@ function gameActionListener(){
 					break;
 			}
 			
-			helpFile += '.inc.php';
+			helpFile += '.inc.php?x=' + xPos + '&y=' + yPos;
 			
 			$('#game-help').html(
 				'<div class="loadingSpinner-circle">' + 

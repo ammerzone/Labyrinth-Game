@@ -11,14 +11,6 @@ class Player{
 	private function getDefault(){
 		return array(
 			'name' => '', 
-			'image' => array(
-				'width' => 	32, 
-				'height' => 32
-			), 
-			'position' => array(
-				'x' => 	0, 
-				'y' => 	0
-			), 
 			'settings' => array(
 				'sound' => 		'on', 
 				'effects' => 	'on', 
@@ -112,43 +104,81 @@ class Player{
 	}
 	
 	public function edit($params){
-		$f = fopen($this->file . $this->session . '.db', 'wb');
+		$arr = $this->get();
 		
-		foreach(file($this->file . $this->session . '.db') as $key => $file){
-			$out = explode(',', $file);
-			
-			$lineText = '';
-			
-			if(sizeof($out) > 1){
-				$arrTitle = $out[0];
-				$lineText .=  $arrTitle . ',';
-				unset($out[0]);
-				
-				foreach($out as $subkey => $data){
-					$sub = explode(':', $data);
-					
-					if(array_key_exists($arrTitle, $params)){
-						if(array_key_exists($sub[0], $params[$arrTitle])){
-							$lineText .= $sub[0] . ':' . $params;
-						}else{
-							$lineText .= $sub[0] . ':' . $sub[1];
-						}
+		if(!is_array($arr['items'])){
+			$arr['items'] = array();
+		}
+		
+		if(array_key_exists('name', $params)){
+			$arr['name'] = $params['name'];
+		}
+		
+		if(array_key_exists('settings', $params)){
+			foreach($params['settings'] as $key => $data){
+				if(array_key_exists($key, $arr['items'])){
+					$arr['items'][$key] = $data;
+				}
+			}
+		}
+		
+		if(array_key_exists('stats', $params)){
+			foreach($params['stats'] as $key => $data){
+				if(array_key_exists($key, $arr['stats'])){
+					if($key === 'Gold' || $key === 'gold'){
+						$arr['stats'][$key] = intval($arr['stats'][$key]) + $data;
 					}else{
-						$lineText .= $sub[0] . ':' . $sub[1];
+						$arr['stats'][$key] = $data;
 					}
 				}
-			}else{
-				$sub = explode(':', $data);
-				
-				if(array_key_exists($sub[0], $params)){
-					$lineText .= $sub[0] . ':' . $params;
+			}
+		}
+		
+		if(array_key_exists('equiped', $params)){
+			foreach($params['items'] as $key => $data){
+				if(array_key_exists($key, $arr['items'])){
+					$arr['items'][$key] = $data;
+				}
+			}
+		}
+		
+		if(array_key_exists('items', $params)){
+			foreach($params['items'] as $item => $amount){
+				if(array_key_exists($item, $arr['items'])){
+					$arr['items'][$item] = intval($arr['items'][$item]) + $amount;
 				}else{
-					$lineText .= $sub[0] . ':' . $sub[1];
+					$arr['items'][$item] = $amount;
+				}
+			}
+		}
+		
+		$f = fopen($this->file . $this->session . '.db', 'wb');
+		
+		foreach($arr as $key => $val){
+			$lineText = '';
+			
+			if(!is_array($val)){
+				$lineText .= $key . ':' . $val;
+			}else{
+				$lineText .= $key;
+				
+				if(sizeof($val) > 0){
+					$lineText .= ',';
+					
+					$i = 0;
+					foreach($val as $sub => $data){
+						$i++;
+						
+						$lineText .= $sub . ':' . $data;
+						
+						if($i < sizeof($val)){
+							$lineText .= ',';
+						}
+					}
 				}
 			}
 			
-			fwrite($f, $lineText);
-			
+			fwrite($f, $lineText . PHP_EOL);
 		}
 		
 		fclose($f);

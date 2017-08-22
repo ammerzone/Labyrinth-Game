@@ -1,0 +1,5 @@
+name:
+settings,sound:on,effects:on,help:on
+stats,speed:500,atk:10,def:10,tp:100,maxTp:100,exp:20,lvl:39,gold:85
+equiped,weapon:,shield:,armour:
+items,Schwert:2,Rüstung:2,Schild:6,Trank:2

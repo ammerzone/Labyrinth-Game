@@ -47,7 +47,8 @@
 				<h2>Erreiche das Ziel</h2>
 				<p>
 					Finde das Ziel-Portal um das Aktuelle Labyrinth abzuschließen und in ein neues zu gelangen. 
-					Laufe hierzu mit deinem Helden durch die Karte, es warten unterwegs viele Abenteuer auf dich, sei auf der Hut.
+					Laufe hierzu mit deinem Helden durch die Karte, es warten unterwegs viele Abenteuer auf dich, sei auf der Hut. 
+					Jedes abgeschlossene Labyrinth lässt deinen Helden um 1 Level steigen.
 				</p>
 				<br>
 				<button class="btn btn-danger buttonClose">Fenster Schließen</button>
@@ -59,7 +60,8 @@
 			<div class="carousel-caption">
 				<h2>Besiege Monster</h2>
 				<p>
-					Messe dich gegen starke Monster, die vor nichts zurückschrecken um dir den Durchgang zu versperren.
+					Messe dich gegen starke Monster, die vor nichts zurückschrecken um dir den Durchgang zu versperren. 
+					Bewege dich in ihre Nähe um den Kampf zu starten und wichtige Erfahrungspunkte und Gold zu sammeln.
 				</p>
 				<br>
 				<button class="btn btn-danger buttonClose">Fenster Schließen</button>
@@ -71,7 +73,9 @@
 			<div class="carousel-caption">
 				<h2>Sammle Items</h2>
 				<p>
-					Finde wichtige Items um dein Überleben zu sichern und Stelle dein einzigartiges Equipment zusammen. Damit wirst du unschlagbar sein!
+					Finde wichtige Items um dein Überleben zu sichern und Stelle dein einzigartiges Equipment zusammen. Damit wirst du unschlagbar sein! 
+					Bewege dich in die Nähe eines Gegenstands um es aufzusammeln und deinem Inventar hinzuzufügen. 
+					Du kannst diese Nutzen, indem du dein Inventar öffnest und ein Item nutzt oder anlegst.
 				</p>
 				<br>
 				<button class="btn btn-danger buttonClose">Fenster Schließen</button>

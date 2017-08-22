@@ -10,8 +10,8 @@ class Map{
 		$this->file = $path . '/map/';
 		$this->path = $path;
 		$this->lab = array(
-			'width' => 		50, 
-			'height' => 	30, 
+			'width' => 		5, 
+			'height' => 	5, 
 			'ground' => 	array(0, 1, 2, 3, 4, 5), 
 			'wall' => 		array(0), 
 			'start' => 		array(
@@ -120,9 +120,9 @@ class Map{
 				)
 			);
 			
-			if($vector >= min($this->lab['width'], $this->lab['height'])){
+			//if($vector >= min($this->lab['width'], $this->lab['height'])){
 				break;
-			}
+			//}
 		}
 	}
 	
@@ -470,53 +470,102 @@ class Map{
 	}
 	
 	public function edit($params){
+		$arr = $this->get();
+		
+		if(array_key_exists('size', $params)){
+			if(array_key_exists('x', $params['size'])){
+				$arr['size']['x'] = $params['size']['x'];
+			}
+			
+			if(array_key_exists('y', $params['size'])){
+				$arr['size']['y'] = $params['size']['y'];
+			}
+		}
+		
+		if(array_key_exists('start', $params)){
+			if(array_key_exists('char', $params['start'])){
+				$arr['start']['char'] = $params['start']['char'];
+			}
+			
+			if(array_key_exists('x', $params['start'])){
+				$arr['start']['x'] = $params['start']['x'];
+			}
+			
+			if(array_key_exists('y', $params['start'])){
+				$arr['start']['y'] = $params['start']['y'];
+			}
+		}
+		
+		if(array_key_exists('end', $params)){
+			if(array_key_exists('char', $params['end'])){
+				$arr['end']['char'] = $params['end']['char'];
+			}
+			
+			if(array_key_exists('x', $params['end'])){
+				$arr['end']['x'] = $params['end']['x'];
+			}
+			
+			if(array_key_exists('y', $params['end'])){
+				$arr['end']['y'] = $params['end']['y'];
+			}
+		}
+		
+		for($i = 0; $i < $this->lab['height']; $i++){
+			
+			for($j = 0; $j < $this->lab['width']; $j++){
+				if(array_key_exists($j . ':' . $i, $params)){
+					if(array_key_exists('texture', $params[$j . ':' . $i])){
+						$arr[$j . ':' . $i]['texture'] = $params[$j . ':' . $i]['texture'];
+					}
+					
+					if(array_key_exists('type', $params[$j . ':' . $i])){
+						$arr[$j . ':' . $i]['type'] = $params[$j . ':' . $i]['type'];
+					}
+					
+					if(array_key_exists('monster', $params[$j . ':' . $i])){
+						$arr[$j . ':' . $i]['monster'] = $params[$j . ':' . $i]['monster'];
+					}
+					
+					if(array_key_exists('item', $params[$j . ':' . $i])){
+						$arr[$j . ':' . $i]['item'] = $params[$j . ':' . $i]['item'];
+					}
+				}
+			}
+		}
 		
 		$f = fopen($this->file . $this->session . '.db', 'wb');
 		
-		foreach(file($this->file . $this->session . '.db') as $key => $file){
-			$out = explode(',', $file);
+		foreach($arr as $key => $data){
 			
 			$lineText = '';
 			
-			if(sizeof($out) > 1){
-				$arrTitle = $out[0];
-				$lineText .=  $arrTitle . ',';
-				unset($out[0]);
+			if(sizeof($data) > 1){
+				$lineText .= $key . ',';
 				
-				foreach($out as $subkey => $data){
-					$sub = explode(':', $data);
+				$i = 0;
+				foreach($data as $sub => $val){
+					$i++;
 					
-					if(array_key_exists($arrTitle, $params)){
-						if(array_key_exists($sub[0], $params[$arrTitle])){
-							$lineText .= $sub[0] . ':' . $params;
-						}else{
-							$lineText .= $sub[0] . ':' . $sub[1];
-						}
-					}else{
-						$lineText .= $sub[0] . ':' . $sub[1];
-					}
+					if(!is_array($val))
+						$lineText .= $sub . ':' . $val . (($i < sizeof($data)) ? ',' : NULL);
 				}
-			}else{
-				$sub = explode(':', $data);
 				
-				if(array_key_exists($sub[0], $params)){
-					$lineText .= $sub[0] . ':' . $params;
-				}else{
-					$lineText .= $sub[0] . ':' . $sub[1];
-				}
+			}else{
+				$lineText .= $key . ':' . $data;
 			}
 			
-			fwrite($f, $lineText);
-			
+			fwrite($f, $lineText . PHP_EOL);
 		}
 		
 		fclose($f);
-		
-		return true;
 	}
 	
 	public function delete(){
-		return unlink($this->file . $this->session . '.db');
+		if(file_exists($this->file . $this->session . '.db')){
+			return unlink($this->file . $this->session . '.db');
+		}
+		
+		return false;
 	}
 }
 ?>

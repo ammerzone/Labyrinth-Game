@@ -13,9 +13,11 @@
   
 	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script>
+		var gameId = '<?=$_SESSION['gameId'];?>';
+	</script>
 </head>
 <body>
-	<audio src="media/audio/running.mp3" id="game-audio-running" muted></audio>
 	<div class="" id="game-canvas"></div>
 	<div class="" id="game-navigation">
 		<div class="container">
@@ -40,13 +42,8 @@
 							<td>&emsp;&emsp;</td>
 							
 							<th>EXP: </th>
-							<td style="min-width: 100px;">
-								<div class="progress">
-									<div class="progress-text">
-										<span id="actEXP">0</span> / <span id="maxEXP">100</span>
-									</div>
-									<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
-								</div>
+							<td class="text-center">
+								<span id="actEXP">0</span>
 							</td>
 						</tr>
 						<tr>
@@ -96,6 +93,8 @@
 	<script src="js/canvas.js"></script>
 	<script src="js/gameCanvas.js"></script>
 	<script src="js/heroCanvas.js"></script>
+	<script src="js/monsterCanvas.js"></script>
+	<script src="js/itemCanvas.js"></script>
 	<script src="js/ajax.js"></script>
 </body>
 </html>
