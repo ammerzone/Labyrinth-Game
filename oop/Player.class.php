@@ -116,8 +116,8 @@ class Player{
 		
 		if(array_key_exists('settings', $params)){
 			foreach($params['settings'] as $key => $data){
-				if(array_key_exists($key, $arr['items'])){
-					$arr['items'][$key] = $data;
+				if(array_key_exists($key, $arr['settings'])){ 
+					$arr['settings'][$key] = $data;
 				}
 			}
 		}
@@ -135,9 +135,9 @@ class Player{
 		}
 		
 		if(array_key_exists('equiped', $params)){
-			foreach($params['items'] as $key => $data){
-				if(array_key_exists($key, $arr['items'])){
-					$arr['items'][$key] = $data;
+			foreach($params['equiped'] as $key => $data){
+				if(array_key_exists($key, $arr['equiped'])){
+					$arr['equiped'][$key] = $data;
 				}
 			}
 		}

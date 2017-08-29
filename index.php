@@ -1,5 +1,13 @@
 <?php require_once('autoload.php'); ?>
-<?php $_SESSION['gameId'] = isset($_SESSION['gameId']) ? $_SESSION['gameId'] : uniqid(); ?>
+<?php
+	if(!isset($_SESSION['newGame'])){
+		$_SESSION['newGame'] = true;
+	}
+	
+	if(!isset($_SESSION['gameId'])){
+		$_SESSION['gameId'] = uniqid();
+	}
+?>
 <!DOCTYPE>
 <html>
 <head>
@@ -96,5 +104,8 @@
 	<script src="js/monsterCanvas.js"></script>
 	<script src="js/itemCanvas.js"></script>
 	<script src="js/ajax.js"></script>
+	<?php if($_SESSION['newGame'] === true): ?>
+		<script src="js/newPlayer.js"></script>
+	<?php endif; ?>
 </body>
 </html>

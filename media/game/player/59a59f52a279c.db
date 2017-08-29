@@ -1,0 +1,5 @@
+name:
+settings,sound:on,effects:on,help:on
+stats,speed:100,atk:10,def:10,tp:100,maxTp:100,exp:0,lvl:1,gold:0
+equiped,weapon:,shield:,armour:
+items

@@ -236,6 +236,82 @@ $(function(){
 			$('#game-help').html();
 		}
 	});
+	
+	$(document).on('change', '#change-setting-sound', function(){
+		if(this.checked){
+			gameAudio.soundtrack.muted = false;
+			
+			var data = {sound: 'on'};
+		}else{
+			gameAudio.soundtrack.muted = true;
+			
+			var data = {sound: 'off'};
+		}
+		
+		// Update player
+		$.ajax({
+			type: 		'post', 
+			url: 		'ajax/updatePlayerSetting.ajax.php', 
+			dataType: 	'json', 
+			data: 		data, 
+			cache: 		false,
+			async: 		false,   
+		});
+	});
+	
+	$(document).on('change', '#change-setting-effects', function(){
+		if(this.checked){
+			gameAudio.running.muted = 		false;
+			gameAudio.hitting.muted = 		false;
+			gameAudio.defending.muted = 	false;
+			gameAudio.dying.muted = 		false;
+			gameAudio.collecting.muted = 	false;
+			gameAudio.monster.muted = 		false;
+			
+			var data = {effects: 'on'};
+		}else{
+			gameAudio.running.muted = 		true;
+			gameAudio.hitting.muted = 		true;
+			gameAudio.defending.muted = 	true;
+			gameAudio.dying.muted = 		true;
+			gameAudio.collecting.muted = 	true;
+			gameAudio.monster.muted = 		true;
+			
+			var data = {effects: 'off'};
+		}
+		
+		// Update player
+		$.ajax({
+			type: 		'post', 
+			url: 		'ajax/updatePlayerSetting.ajax.php', 
+			dataType: 	'json', 
+			data: 		data, 
+			cache: 		false,
+			async: 		false,   
+		});
+	});
+	
+	$(document).on('change', '#change-setting-help', function(){
+		if(this.checked){
+			character.settings.help = 'on';
+			
+			var data = {help: 'on'};
+		}else{
+			character.settings.help = 'off';
+			
+			var data = {help: 'off'};
+		}
+		
+		// Update player
+		$.ajax({
+			type: 		'post', 
+			url: 		'ajax/updatePlayerSetting.ajax.php', 
+			dataType: 	'json', 
+			data: 		data, 
+			cache: 		false,
+			async: 		false,   
+		});
+	});
 });
 
 function popupLoader(){

@@ -154,6 +154,20 @@ var gameDefaults = function(){
 			}
 		}
 		
+		if('settings' in data){
+			if('sound' in data.settings){
+				character.settings.sound = data.settings.sound;
+			}
+			
+			if('effects' in data.settings){
+				character.settings.effects = data.settings.effects;
+			}
+			
+			if('help' in data.settings){
+				character.settings.help = data.settings.help;
+			}
+		}
+		
 		if('stats' in data){
 			if('speed' in data.stats){
 				character.stats.speed = data.stats.speed;
@@ -207,8 +221,15 @@ var gameDefaults = function(){
 		}
 	});
 	
-	xPos = map.start.x;//character.position.x;
-	yPos = map.start.y;//character.position.y;
+	xPos = map.start.x;
+	yPos = map.start.y;
+	
+	// Soundtrack (enable / disable)
+	if(character.settings.sound === 'on'){
+		gameAudio.soundtrack.muted = false;
+	}else if(character.settings.sound === 'off'){
+		gameAudio.soundtrack.muted = true;
+	}
 };
 
 var gameUpdate = function(){
@@ -523,6 +544,10 @@ var gameMain = function(){
 		renderCounter = 0;
 		
 		gameUpdate();
+	}
+	
+	if(character.settings.help === 'off'){
+		helpEvent = null;
 	}
 	
 	$.when(gamePositionate((tick - gameTick) / 1000)).done(function(){

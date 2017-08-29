@@ -60,13 +60,13 @@ function canvasFire(){
 
 function loadAudios(){
 	return {
-		soundtrack: 	null, 
-		running: 		null,
-		hitting: 		null, 
-		defending: 		null, 
-		dying: 			null, 
-		collecting: 	null, 
-		monster: 		null
+		soundtrack: 	{}, 
+		running: 		{},
+		hitting: 		{}, 
+		defending: 		{}, 
+		dying: 			{}, 
+		collecting: 	{}, 
+		monster: 		{}
 	};
 }
 
@@ -80,8 +80,8 @@ function battleMonster(x, y){
 		// monster hit me -> my hp down
 		// if: monster hp <= 0 -> win (break loop)
 		// if: my hp <= 0 -> lose (break loop)
-	// if won: popup with button -> delete monster, add exp
-	// if lost: popup with button -> save to highscore, reset hero, create map
+	// if won: popup with button -> delete monster, add exp, add gold
+	// if lost: popup with button -> save to highscore, reset hero stats and equip and items, create map
 	// close battle window
 	
 	

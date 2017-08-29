@@ -55,7 +55,9 @@ var heroUpdate = function(){
 	
 	if(input.isDown('UP') || input.isDown('w') || input.isDown('LEFT') || input.isDown('a') || input.isDown('DOWN') || input.isDown('s') || input.isDown('RIGHT') || input.isDown('d')){
 		if(gameAudio.running.muted === true){
-			gameAudio.running.muted = false;
+			if(character.settings.effects === 'on'){
+				gameAudio.running.muted = false;
+			}
 		}
 	}else{
 		if(gameAudio.running.muted === false){

@@ -7,7 +7,7 @@ $x = 		isset($_POST['x']) ? 			$_POST['x'] : 			NULL;
 $y = 		isset($_POST['y']) ? 			$_POST['y'] : 			NULL;
 $item = 	isset($_POST['item']) ? 			$_POST['item'] : 			NULL;
 
-// Abourt if parameters missing
+// Abort if parameters missing
 if($session === NULL || $x === NULL || $y === NULL || $item === NULL){
 	echo json_encode(
 		array(

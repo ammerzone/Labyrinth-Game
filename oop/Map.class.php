@@ -120,9 +120,9 @@ class Map{
 				)
 			);
 			
-			//if($vector >= min($this->lab['width'], $this->lab['height'])){
+			if($vector >= min($this->lab['width'], $this->lab['height'])){
 				break;
-			//}
+			}
 		}
 	}
 	
