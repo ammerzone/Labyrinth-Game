@@ -11,6 +11,8 @@ $params = 	array(
 
 // Abort if parameters missing
 if($session === NULL){
+	
+	// Return JSON string
 	echo json_encode(
 		array(
 			'status' => false
@@ -23,6 +25,7 @@ $player = new Player($session, '../media/game');
 
 // Change sound settings
 if($params['sound'] != NULL){
+	
 	// Edit sound setting
 	$player->edit(
 		array(
@@ -35,6 +38,7 @@ if($params['sound'] != NULL){
 
 // Change effects settings
 if($params['effects'] != NULL){
+	
 	// Edit effects setting
 	$player->edit(
 		array(
@@ -47,6 +51,7 @@ if($params['effects'] != NULL){
 
 // Change help settings
 if($params['help'] != NULL){
+	
 	// Edit help setting
 	$player->edit(
 		array(
@@ -57,6 +62,7 @@ if($params['help'] != NULL){
 	);
 }
 
+// Return JSON string
 echo json_encode(
 	array(
 		'status' => true

@@ -9,6 +9,8 @@ $item = 	isset($_POST['item']) ? 			$_POST['item'] : 			NULL;
 
 // Abort if parameters missing
 if($session === NULL || $x === NULL || $y === NULL || $item === NULL){
+	
+	// Return JSON string
 	echo json_encode(
 		array(
 			'status' => false
@@ -19,10 +21,11 @@ if($session === NULL || $x === NULL || $y === NULL || $item === NULL){
 
 $player = new Player($session, '../media/game');
 
+// Check if item is gold
 if($item === 'Gold' || $item === 'gold'){
 	$itemNumb = rand(50, 100);
 	
-	// add item to player list
+	// add item (=gold) to player list
 	$player->edit(
 		array(
 			'stats' => array(
@@ -54,7 +57,7 @@ $map->edit(
 	)
 );
 
-// Positive response
+// Return JSON string
 echo json_encode(
 	array(
 		'status' => true, 

@@ -1,10 +1,22 @@
 <?php
+/**
+* Class to detect the actual device
+* 
+* @author 			Jules Rau <admin@jules-rau.de>
+* @copyright 		Jules Rau
+* @license 			MIT license
+* @origin 			https://github.com/ammerzone/labyrinth
+* @version 	1.0		30.08.2017
+*/
 class Device{
-	public function __construct(){
-		
-	}
 	
-	// Check if device is tablet
+	/** 
+	* Check if device is tablet
+	* 
+	* @access 	private
+	* @return 	boolean
+	* @see 		isTablet()
+	*/
 	public function isTablet(){
 		if(preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))){
 			return true;
@@ -27,7 +39,13 @@ class Device{
 		return false;
 	}
 	
-	// Check if device is mobile phone
+	/** 
+	* Check if device is mobile phone
+	* 
+	* @access 	private
+	* @return 	boolean
+	* @see 		isMobile()
+	*/
 	public function isMobile(){
 		if(preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|android|iemobile)/i', strtolower($_SERVER['HTTP_USER_AGENT']))){
 			return true;
@@ -62,7 +80,13 @@ class Device{
 		return false;
 	}
 	
-	// Check if device is desktop
+	/** 
+	* Check if device is desktop
+	* 
+	* @access 	private
+	* @return 	boolean
+	* @see 		isDesktop()
+	*/
 	public function isDesktop(){
 		if($this->isMobile === true || $this->isTablet === true){
 			return false;

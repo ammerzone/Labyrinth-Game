@@ -1,11 +1,41 @@
 <?php
+/**
+* Administration for the highscore data (file)
+* Operations: Add, Edit, Get, Delete
+* 
+* @author 			Jules Rau <admin@jules-rau.de>
+* @copyright 		Jules Rau
+* @license 			MIT license
+* @origin 			https://github.com/ammerzone/labyrinth
+* @version 	1.0		30.08.2017
+*/
 class Highscore{
+	/**
+	* Path of the player data-file
+	* 
+	* @var 		string
+	* @access 	private
+	*/
 	private $file;
 	
+	/**
+	* Constructs the Object
+	* 
+	* @access 	public
+	* @param 	string 	$path
+	* @return 	void
+	*/
 	public function __construct($path){
 		$this->file = $path . '/highscore.db';
 	}
 	
+	/** 
+	* Initialize highscore default values
+	* 
+	* @access 	private
+	* @return 	array
+	* @see 		getDefault()
+	*/
 	private function getDefault(){
 		return array(
 			'id' => 	'', 
@@ -16,19 +46,30 @@ class Highscore{
 		);
 	}
 	
+	/** 
+	* Get highscore values
+	* 
+	* @access 	public
+	* @return 	array
+	* @see 		get()
+	*/
 	public function get(){
 		$highscore = array();
 		
+		// Check if file exists
 		if(!file_exists($this->file))
 			$this->add();
 		
+		// For each highscore element
 		foreach(file($this->file) as $key => $line){
 			
 			$highscore[$key] = array();
 			
+			// For every sub-array element
 			foreach(explode(',', $line) as $sub => $data){
 				$val = explode(':', $data);
 				
+				// Append to array
 				$highscore[$key][$val[0]] = isset($val[1]) ? $val[1] : '';
 			}
 		}
@@ -36,11 +77,29 @@ class Highscore{
 		return $highscore;
 	}
 	
+	/** 
+	* Add new highscore file
+	* 
+	* @access 	public
+	* @param 	string 	$name
+	* @return 	void
+	* @see 		add()
+	*/
 	public function add(){
+		
+		// Open or create file
 		$f = fopen($this->file, 'wb');
 		fclose($f);
 	}
 	
+	/** 
+	* Edit highscore values
+	* 
+	* @access 	public
+	* @param 	array 	$params
+	* @return 	boolean
+	* @see 		edit()
+	*/
 	public function edit($params){
 		$arr = array();
 		
@@ -89,52 +148,17 @@ class Highscore{
 		}
 		
 		fclose($f);
-		/*
-		$f = fopen($this->file, 'wb');
 		
-		$i = 0;
-		
-		foreach(file($this->file) as $key => $line){
-			$i++;
-			
-			if($i >= 100){
-				break;
-			}
-			
-			foreach(explode(',', $line) as $sub => $data){
-				$val = explode(':', $data);
-				
-				$isBetter = false;
-				
-				if($val[0] === 'exp'){
-					if(isset($val[1])){
-						if($val[1] >= $params['exp']){
-							$isBetter = true;
-						}
-					}
-				}
-			}
-			
-			if($isBetter === true){
-				$i++;
-				
-				$lineText = '';
-				$lineText .= 'name:' . $params['name'] . ',';
-				$lineText .= 'date:' . date('d.m.Y', time()) . ',';
-				$lineText .= 'lvl:' . $params['lvl'] . ',';
-				$lineText .= 'exp:' . $params['exp'];
-				
-				fwrite($f, $lineText . PHP_EOL);
-			}
-			
-			fwrite($f, $line . PHP_EOL);
-		}
-		
-		fclose($f);
-		*/
 		return true;
 	}
 	
+	/** 
+	* Delete Highscore
+	* 
+	* @access 	public
+	* @return 	boolean
+	* @see 		delete()
+	*/
 	public function delete(){
 		return unlink($this->file);
 	}

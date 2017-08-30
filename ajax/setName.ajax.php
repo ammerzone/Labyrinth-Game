@@ -7,6 +7,8 @@ $name = 	isset($_POST['name']) ? 		$_POST['name'] : 		NULL;
 
 // Abort if parameters missing
 if($session === NULL || $name === NULL){
+	
+	// Return JSON string
 	echo json_encode(
 		array(
 			'status' => false
@@ -27,6 +29,7 @@ $player->edit(
 // Change init session to false
 $_SESSION['newGame'] = false;
 
+// Return JSON string
 echo json_encode(
 	array(
 		'status' => true

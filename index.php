@@ -1,9 +1,11 @@
 <?php require_once('autoload.php'); ?>
 <?php
+	// Set game init session
 	if(!isset($_SESSION['newGame'])){
 		$_SESSION['newGame'] = true;
 	}
 	
+	// Set game Id
 	if(!isset($_SESSION['gameId'])){
 		$_SESSION['gameId'] = uniqid();
 	}

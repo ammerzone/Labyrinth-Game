@@ -4,8 +4,10 @@ require('autoload.php');
 // Get parameters
 $session = 	isset($_SESSION['gameId']) ? $_SESSION['gameId'] : (isset($_POST['session']) ? $_POST['session'] : NULL);
 
-// Abourt if parameters missing
+// Abort if parameters missing
 if($session === NULL){
+	
+	// Return JSON string
 	echo json_encode(
 		array(
 			'status' => false
@@ -16,10 +18,12 @@ if($session === NULL){
 
 $player = new Player($session, '../media/game');
 
+// Get player data
 $data = $player->get();
 
 $highscore = new Highscore('../media/game');
 
+// Edit highscore
 $highscore->edit(
 	array(
 		'id' => 	$session,
@@ -30,6 +34,7 @@ $highscore->edit(
 	)
 );
 
+// Return JSON string
 echo json_encode(
 	array(
 		'status' => true
