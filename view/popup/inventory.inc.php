@@ -47,28 +47,28 @@ unset($data);
 							<b>Anzahl:</b>
 						</div>
 						<div class="col-xs-6">
-							<span><?=$amount;?></span>
+							<span class="item-amount"><?=$amount;?></span>
 						</div><br>
 						
 						<div class="col-xs-6">
 							<b>ATK:</b>
 						</div>
 						<div class="col-xs-6">
-							<span>+<?=$data['atk'];?></span>
+							<span class="item-atk">+<?=$data['atk'];?></span>
 						</div><br>
 						
 						<div class="col-xs-6">
 							<b>DEF:</b>
 						</div>
 						<div class="col-xs-6">
-							<span>+<?=$data['def'];?></span>
+							<span class="item-def">+<?=$data['def'];?></span>
 						</div><br>
 						
 						<div class="col-xs-6">
 							<b>TP:</b>
 						</div>
 						<div class="col-xs-6">
-							<span>+<?=$data['tp'];?></span>
+							<span class="item-tp">+<?=$data['tp'];?></span>
 						</div><br>
 					</td>
 					<td width="250px">
@@ -76,11 +76,11 @@ unset($data);
 						<p><?=$data['description'];?></p>
 					</td>
 					<td>
-						<a href="#" class="btn btn-success inventory-select" data-item="<?=$item;?>">
+						<a href="" class="btn btn-success inventory-select" data-item="<?=$item;?>">
 							Nutzen <span class="glyphicon glyphicon-plus"></span>
 						</a>
 						<br><br>
-						<a href="#" class="btn btn-danger inventory-delete" data-item="<?=$item;?>">
+						<a href="" class="btn btn-danger inventory-delete" data-item="<?=$item;?>">
 							Löschen <span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</td>

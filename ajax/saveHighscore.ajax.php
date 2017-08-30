@@ -24,6 +24,7 @@ $highscore->edit(
 	array(
 		'id' => 	$session,
 		'name' => 	$data['name'],
+		'date' => 	date('d.m.Y', time()) . ',', 
 		'lvl' => 	$data['stats']['lvl'], 
 		'exp' => 	$data['stats']['exp']
 	)

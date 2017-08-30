@@ -51,7 +51,7 @@ class Highscore{
 			$i++;
 			
 			if($foundPlace === false){
-				if($data['exp'] < $params['exp']){
+				if(intval($data['exp']) < intval($params['exp'])){
 					
 					array_push($arr, $params);
 					
@@ -81,7 +81,7 @@ class Highscore{
 		foreach($arr as $key => $value){
 			$line = 	'id:' . preg_replace('#\r|\n#', '', $value['id']) . ',';
 			$line .= 	'name:' . preg_replace('#\r|\n#', '', $value['name']) . ',';
-			$line .= 	'date:' . date('d.m.Y', time()) . ',';
+			$line .= 	'date:' . preg_replace('#\r|\n#', '', $value['date']) . ',';
 			$line .= 	'lvl:' . preg_replace('#\r|\n#', '', $value['lvl']) . ',';
 			$line .= 	'exp:' . preg_replace('#\r|\n#', '', $value['exp']);
 			

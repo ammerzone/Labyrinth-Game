@@ -1,5 +1,5 @@
 Gold,type:other,amount:0,atk:0,def:0,tp:0,image:gold.png,description:Ein Bündel mit Gold. Wieviel wohl enthalten sein mag?
-Trank,type:other,amount:50,atk:0,def:0,tp:0,image:trank.png,description:Dieser Trank heilt dich und stellt deine Lebenspunkte (TP) wieder her.
-Schwert,type:weapon,amount:1,atk:10,def:0,tp:0,image:schwert.png,description:Dieses aus Stahl geschmiedete Schwert wird seine Gegner das fürchten lehren.
-Schild,type:shield,amount:1,atk:0,def:5,tp:0,image:schild.png,description:Wehre gegnerische Angriffe mit diesem Schild erfolgreich ab.
-Rüstung,type:armour,amount:1,atk:0,def:0,tp:5,image:rustung.png,description:Diese Rüstung schützt deinen Körper vor gegnerischen Treffern.
+Trank,type:other,amount:1,atk:0,def:0,tp:15,image:trank.png,description:Dieser Trank heilt dich und stellt deine Lebenspunkte (TP) wieder her.
+Schwert,type:weapon,amount:1,atk:10,def:0,tp:0,image:schwert.png,description:Dieses aus Stahl geschmiedete Schwert wird seine Gegner das Fürchten lehren. Verschwindet nach dem Kampf.
+Schild,type:shield,amount:1,atk:0,def:5,tp:0,image:schild.png,description:Wehre gegnerische Angriffe mit diesem Schild erfolgreich ab. Verschwindet nach dem Kampf.
+Rüstung,type:armour,amount:1,atk:0,def:0,tp:5,image:rustung.png,description:Diese Rüstung schützt deinen Körper vor gegnerischen Treffern. Verschwindet nach dem Kampf.

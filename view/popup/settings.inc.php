@@ -14,13 +14,15 @@ if($session === NULL){
 
 $player = new Player($session, '../../media/game');
 
+// get data
 $data = $player->get();
 ?>
 
 <h2>Einstellungen</h2>
 <table>
 	<tr>
-		<th>Sound:</th>
+		<th>Soundtrack (Musik):</th>
+		<td>&emsp;</td>
 		<td>
 			<label class="sliderLabel">
 				<input type="checkbox" id="change-setting-sound" <?=isset($data['settings']['sound']) ? (($data['settings']['sound'] === 'on') ? 'checked' : NULL) : NULL;?>>
@@ -33,7 +35,8 @@ $data = $player->get();
 		</td>
 	</tr>
 	<tr>
-		<th>Effekte</th>
+		<th>Sound-Effekte:</th>
+		<td>&emsp;</td>
 		<td>
 			<label class="sliderLabel">
 				<input type="checkbox" id="change-setting-effects" <?=isset($data['settings']['effects']) ? (($data['settings']['effects'] === 'on') ? 'checked' : NULL) : NULL;?>>
@@ -46,7 +49,8 @@ $data = $player->get();
 		</td>
 	</tr>
 	<tr>
-		<th>Hilfe</th>
+		<th>Hilfe:</th>
+		<td>&emsp;</td>
 		<td>
 			<label class="sliderLabel">
 				<input type="checkbox" id="change-setting-help" <?=isset($data['settings']['help']) ? (($data['settings']['help'] === 'on') ? 'checked' : NULL) : NULL;?>>

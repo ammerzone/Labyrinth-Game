@@ -7,6 +7,8 @@
 	if(!isset($_SESSION['gameId'])){
 		$_SESSION['gameId'] = uniqid();
 	}
+	
+	$device = new Device();
 ?>
 <!DOCTYPE>
 <html>
@@ -94,6 +96,14 @@
 	<div id="game-popup"></div>
 	<div id="game-help-background"></div>
 	<div id="game-help"></div>
+	<?php if($device->isMobile() || $device->isTablet()): ?>
+		<div id="mobile-moving-navigation">
+			<button id="mobile-up">&#9650;</button>
+			<button id="mobile-left">&#9668;</button>
+			<button id="mobile-right">&#9658;</button>
+			<button id="mobile-down">&#9660;</button>
+		</div>
+	<?php endif; ?>
 	<img class="hidden" id="hero-image" src="media/img/player/hero1.png">
 	
 	<link rel="stylesheet" href="css/main.css">

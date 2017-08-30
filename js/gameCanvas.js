@@ -263,18 +263,17 @@ var gameUpdate = function(){
 var gamePositionate = function(modifier){
 	/* RUNNING */
 		isRunning = false;
-		
 		if(helpEvent === null){
 			// Run up
-			if(input.isDown('UP') || input.isDown('w')){
+			if(input.isDown('UP') || input.isDown('w') || mobileMoving === 'up'){
 				isRunning = 	true;
 				runDirection = 	'up';
 				
-				map.y -= (character.stats.speed * modifier);
+				map.y -= character.stats.speed * modifier;
 			}
 			
 			// Run left
-			if(input.isDown('LEFT') || input.isDown('a')){
+			if(input.isDown('LEFT') || input.isDown('a') || mobileMoving === 'left'){
 				isRunning = 	true;
 				runDirection = 	'left';
 				
@@ -282,7 +281,7 @@ var gamePositionate = function(modifier){
 			}
 			
 			// Run down
-			if(input.isDown('DOWN') || input.isDown('s')){
+			if(input.isDown('DOWN') || input.isDown('s') || mobileMoving === 'down'){
 				isRunning = 	true;
 				runDirection = 	'down';
 				
@@ -290,7 +289,7 @@ var gamePositionate = function(modifier){
 			}
 			
 			// Run right
-			if(input.isDown('RIGHT') || input.isDown('d')){
+			if(input.isDown('RIGHT') || input.isDown('d') || mobileMoving === 'right'){
 				isRunning = 	true;
 				runDirection = 	'right';
 				
@@ -493,8 +492,10 @@ var gameAction = function(){
 				
 				renderCounter = 1;
 			}else{
-				helpEvent = 'open';
-				battleMonster(xPos, yPos);
+				if(helpEvent != 'open'){
+					helpEvent = 'open';
+					battleMonster(xPos, yPos);
+				}
 			}
 		}
 		
@@ -507,8 +508,10 @@ var gameAction = function(){
 				
 				renderCounter = 1;
 			}else{
-				helpEvent = 'open';
-				collectItem(xPos, yPos);
+				if(helpEvent != 'open'){
+					helpEvent = 'open';
+					collectItem(xPos, yPos);
+				}
 			}
 		}
 		
@@ -521,8 +524,10 @@ var gameAction = function(){
 				
 				renderCounter = 1;
 			}else{
-				helpEvent = 'open';
-				createMap();
+				if(helpEvent != 'open'){
+					helpEvent = 'open';
+					createMap();
+				}
 			}
 		}
 	}
@@ -544,11 +549,12 @@ var gameMain = function(){
 		renderCounter = 0;
 		
 		gameUpdate();
+		
+		if(character.settings.help === 'off'){
+			helpEvent = null;
+		}
 	}
 	
-	if(character.settings.help === 'off'){
-		helpEvent = null;
-	}
 	
 	$.when(gamePositionate((tick - gameTick) / 1000)).done(function(){
 		gameRender();

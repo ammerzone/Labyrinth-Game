@@ -126,7 +126,7 @@ class Player{
 			foreach($params['stats'] as $key => $data){
 				if(array_key_exists($key, $arr['stats'])){
 					if($key === 'Gold' || $key === 'gold'){
-						$arr['stats'][$key] = intval($arr['stats'][$key]) + $data;
+						$arr['stats'][$key] = min(intval($arr['stats'][$key]) + $data, 999999);
 					}else{
 						$arr['stats'][$key] = $data;
 					}
@@ -143,12 +143,16 @@ class Player{
 		}
 		
 		if(array_key_exists('items', $params)){
-			foreach($params['items'] as $item => $amount){
-				if(array_key_exists($item, $arr['items'])){
-					$arr['items'][$item] = intval($arr['items'][$item]) + $amount;
-				}else{
-					$arr['items'][$item] = $amount;
+			if(is_array($params['items'])){
+				foreach($params['items'] as $item => $amount){
+					if(array_key_exists($item, $arr['items'])){
+						$arr['items'][$item] = intval($arr['items'][$item]) + $amount;
+					}else{
+						$arr['items'][$item] = $amount;
+					}
 				}
+			}else{
+				$arr['items'] = '';
 			}
 		}
 		

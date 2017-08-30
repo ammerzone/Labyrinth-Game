@@ -73,31 +73,60 @@ function loadAudios(){
 function battleMonster(x, y){
 	var monster = hasMonster(x, y);
 	
-	// open battle window
-	// load...
-	// loop:
-		// i hit monster -> monster hp down
-		// monster hit me -> my hp down
-		// if: monster hp <= 0 -> win (break loop)
-		// if: my hp <= 0 -> lose (break loop)
-	// if won: popup with button -> delete monster, add exp, add gold
-	// if lost: popup with button -> save to highscore, reset hero stats and equip and items, create map
-	// close battle window
+	$('body').append('<div id="game-battleground"><div class="content"></div></div>');
 	
-	
-	
-	$.ajax({
-		type: 		'post', 
-		url: 		'ajax/saveHighscore.ajax.php', 
-		dataType: 	'json', 
-		data: 		{
-			session: gameId
-		}, 
-		cache: 		false,
-		async: 		false
+	$('#game-battleground').css({
+		position: 			'fixed',
+		left: 				'0px',
+		top: 				'0px',
+		width: 				'100%',
+		height: 			'100%',
+		overflow: 			'auto',
+		backgroundColor: 	'rgba(0, 0, 0, 0.8)', 
+		zIndex: 			'20', 
+		textAlign: 			'center',
+		paddingTop: 		'50vh', 
+		display: 			'none'
 	});
 	
-	helpEvent = null;
+	$('#game-battleground .content').css({
+			width: 			'50vw', 
+			minWidth: 		'300px', 
+			margin: 		'auto', 
+		    marginTop: 		'-20vh',
+			height: 		'40vh',
+			background: 	'#DDDDDD',
+			padding: 		'0px',
+			border: 		'2px solid #DDDDDD',
+			borderRadius: 	'5px', 
+		overflow: 			'auto'
+	});
+	
+	$('#game-battleground .content').html(
+		'<div class="loadingSpinner-circle">' + 
+			'<div class="loadingSpinner-circle1 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle2 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle3 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle4 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle5 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle6 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle7 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle8 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle9 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle10 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle11 loadingSpinner-child"></div>' + 
+			'<div class="loadingSpinner-circle12 loadingSpinner-child"></div>' + 
+		'</div>'
+	);
+	
+	// Open battle window
+	$('#game-battleground').fadeIn(400);
+	
+	// Load battle
+	$('#game-battleground .content').load('view/popup/battle.inc.php?x=' + x + '&y=' + y + '&monster=' + monster, function(){
+		$('#game-battleground .content').hide();
+		$('#game-battleground .content').slideDown(400);
+	});
 }
 
 function collectItem(x, y){
@@ -175,8 +204,7 @@ function createMap(){
 			session: gameId
 		}, 
 		cache: 		false,
-		async: 		false,
-		//success: 	function(data){alert(JSON.stringify(data));}
+		async: 		false
 	});
 	
 	$.ajax({
@@ -198,6 +226,8 @@ function createMap(){
 	canvasFire();
 	
 	helpEvent = null;
+	
+	location.reload();
 }
 
 function actualizeStatusBar(){
@@ -216,6 +246,12 @@ function actualizeStatusBar(){
 		$('#game-navigation #actEXP').html(data.stats.exp);
 		$('#game-navigation #actTP').html(data.stats.tp);
 		$('#game-navigation #maxTP').html(data.stats.maxTp);
+		
+		$('#game-navigation #actTp').closest('.progress').find('.progress-bar').attr('aria-valuenow', data.stats.tp);
+		$('#game-navigation #actTp').closest('.progress').find('.progress-bar').attr('aria-valuemax', data.stats.maxTp);
+		$('#game-navigation #actTp').closest('.progress').find('.progress-bar').css({
+			width: ((data.stats.tp / data.stats.maxTp) * 100) + '%'
+		});
 	});
 	
 	setTimeout(function(){
