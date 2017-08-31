@@ -88,7 +88,7 @@ class Device{
 	* @see 		isDesktop()
 	*/
 	public function isDesktop(){
-		if($this->isMobile === true || $this->isTablet === true){
+		if($this->isMobile() === true || $this->isTablet() === true){
 			return false;
 		}
 		

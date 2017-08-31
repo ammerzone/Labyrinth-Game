@@ -6,7 +6,8 @@ var keysDown = {},
 	mouseYright = 		0, 
 	mouseXmove = 		0, 
 	mouseYmove = 		0, 
-	mobileMoving = 		null;
+	mobileMoving = 		null, 
+	isMobile = 			checkMobile();
 /* END GLOBAL VARIABLES */
 
 // Event listener for keydown event
@@ -69,9 +70,36 @@ window.input = {
 
 $(function(){
 	
+	// Toggle mobile navigation
+	$('#buttonMobileNavHamburger').on((isMobile ? 'touchend' : 'click'), function(e){
+		
+		// Check if navigation is visible
+		if($('#game-navigation-collapse').is(":visible")){
+			
+			// Hide navigation
+			$('#game-navigation-collapse').slideUp(400);
+		}else{
+			
+			// Positionate Navigation
+			$('#game-navigation-collapse').css({
+				position: 	'fixed', 
+				bottom: 	'60px', 
+				padding: 	'10px', 
+				width: 		'250px', 
+				left: 		$('#buttonMobileNavHamburger').offset().left + 'px', 
+				background: '#222222'
+			});
+			
+			// Show navigation
+			$('#game-navigation-collapse').slideDown(400);
+		}
+	});
+	
 	// Open account window
-	$('#buttonAccount').on((checkMobile() ? 'touchend' : 'click'), function(e){
+	$('#buttonAccount').on((isMobile ? 'touchend' : 'click'), function(e){
 		e.preventDefault();
+		
+		$('#game-navigation-collapse').hide();
 		
 		popupLoader();
 		
@@ -96,8 +124,10 @@ $(function(){
 	});
 	
 	// Open inventory window
-	$('#buttonInventory').on((checkMobile() ? 'touchend' : 'click'), function(e){
+	$('#buttonInventory').on((isMobile ? 'touchend' : 'click'), function(e){
 		e.preventDefault();
+		
+		$('#game-navigation-collapse').hide();
 		
 		popupLoader();
 		
@@ -122,8 +152,10 @@ $(function(){
 	});
 	
 	// Open settings window
-	$('#buttonSettings').on((checkMobile() ? 'touchend' : 'click'), function(e){
+	$('#buttonSettings').on((isMobile ? 'touchend' : 'click'), function(e){
 		e.preventDefault();
+		
+		$('#game-navigation-collapse').hide();
 		
 		popupLoader();
 		
@@ -147,8 +179,10 @@ $(function(){
 	});
 	
 	// Open highscore window
-	$('#buttonHighscore').on((checkMobile() ? 'touchend' : 'click'), function(e){
+	$('#buttonHighscore').on((isMobile ? 'touchend' : 'click'), function(e){
 		e.preventDefault();
+		
+		$('#game-navigation-collapse').hide();
 		
 		popupLoader();
 		
@@ -172,8 +206,10 @@ $(function(){
 	});
 	
 	// Open help window
-	$('#buttonHelp').on((checkMobile() ? 'touchend' : 'click'), function(e){
+	$('#buttonHelp').on((isMobile ? 'touchend' : 'click'), function(e){
 		e.preventDefault();
+		
+		$('#game-navigation-collapse').hide();
 		
 		// Set help event
 		renderCounter = 0;
@@ -181,43 +217,43 @@ $(function(){
 	});
 	
 	// Move up with mobile navigation
-	$('#mobile-up').on((checkMobile() ? 'touchstart' : 'mousedown'), function(e){
+	$('#mobile-up').on((isMobile ? 'touchstart' : 'mousedown'), function(e){
 		e.preventDefault();
 		
 		mobileMoving = 'up';
-	}).on((checkMobile() ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
 	// Move left with mobile navigation
-	$('#mobile-left').on((checkMobile() ? 'touchstart' : 'mousedown'), function(e){
+	$('#mobile-left').on((isMobile ? 'touchstart' : 'mousedown'), function(e){
 		e.preventDefault();
 		
 		mobileMoving = 'left';
-	}).on((checkMobile() ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
 	// Move right with mobile navigation
-	$('#mobile-right').on(checkMobile() ? 'touchstart' : 'mousedown'), function(e){
+	$('#mobile-right').on((isMobile ? 'touchstart' : 'mousedown'), function(e){
 		e.preventDefault();
 		
 		mobileMoving = 'right';
-	}).on((checkMobile() ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'touchend' : 'mouseup'), function(){
 		mobileMoving = null;
 	});
 	
 	// Move down with mobile navigation
-	$('#mobile-down').on((checkMobile() ? 'touchstart' : 'mousedown'), function(e){
+	$('#mobile-down').on((isMobile ? 'touchstart' : 'mousedown'), function(e){
 		e.preventDefault();
 		
 		mobileMoving = 'down';
-	}).on((checkMobile() ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
 	// Close popup window
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-popup .buttonClose, #game-popup-background', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-popup .buttonClose, #game-popup-background', function(e){
 		e.preventDefault();
 		
 		$('#game-popup-background').hide();
@@ -228,7 +264,7 @@ $(function(){
 	});
 	
 	// Select item from Inventory
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '.inventory-select', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '.inventory-select', function(e){
 		e.preventDefault();
 		
 		// Update file + html from database
@@ -255,7 +291,7 @@ $(function(){
 	});
 	
 	// Delete item from inventory
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '.inventory-delete', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '.inventory-delete', function(e){
 		e.preventDefault();
 		
 		var item = $(this).attr('data-item');
@@ -284,7 +320,7 @@ $(function(){
 	});
 	
 	// Button to start collecting item
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-help #game-item-collect', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-item-collect', function(e){
 		e.preventDefault();
 		
 		var x = $(this).attr('data-x');
@@ -303,7 +339,7 @@ $(function(){
 	});
 	
 	// Button to start battle
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-help #game-start-battle', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-start-battle', function(e){
 		e.preventDefault();
 		
 		// Start battle procedure
@@ -317,7 +353,7 @@ $(function(){
 	});
 	
 	// Button to start level up
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-help #game-next-level', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-next-level', function(e){
 		e.preventDefault();
 		
 		// Delete map, then add map
@@ -339,7 +375,7 @@ $(function(){
 	});
 	
 	// Close help window
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-help-background, #game-help .buttonClose', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help-background, #game-help .buttonClose', function(e){
 		e.preventDefault();
 		
 		// Check if no batte, item collection or level up is open
@@ -443,7 +479,7 @@ $(function(){
 	});
 
 	// Close battle window after havin won it
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-battleground .content #btn-win', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-battleground .content #btn-win', function(e){
 		e.preventDefault();
 		
 		if($(this).attr('data-x') != 'undefined' && $(this).attr('data-x') != 'undefined'){
@@ -523,7 +559,7 @@ $(function(){
 	});
 	
 	// Close battle window after having lost it
-	$(document).on((checkMobile() ? 'touchend' : 'click'), '#game-battleground .content #btn-lose', function(e){
+	$(document).on((isMobile ? 'touchend' : 'click'), '#game-battleground .content #btn-lose', function(e){
 		e.preventDefault();
 		
 		// Set exp and gold to 0

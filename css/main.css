@@ -147,6 +147,7 @@ body{
 }
 
 .navButton{
+	font-weight: 	900;
 	background: 	#DDDDDD;
 	margin-left: 	10px;
 	margin-right: 	10px;
@@ -159,6 +160,19 @@ body{
 	color: 			#000000;
 	padding-left: 	15px;
 	padding-right: 	15px;
+}
+
+.collapsed{
+	display: none;
+}
+
+.collapsed .navButton{
+	margin: 0px;
+	padding: 0px;
+}
+
+.collapsed .navButton span.glyphicon{
+	padding-left: 0px;
 }
 
 .highscore-scroll, 

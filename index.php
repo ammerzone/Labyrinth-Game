@@ -33,65 +33,128 @@
 	<div class="" id="game-canvas"></div>
 	<div class="" id="game-navigation">
 		<div class="container">
-			<div class="col-xs-6">
-				<ul class="nav nav-pills navbar-left">
-					<li class="">
-						<a class="navButton" id="buttonAccount"><span class="glyphicon glyphicon-user" title="Account"></span></a>
-					</li>
-					<li class="">
-						<a class="navButton" id="buttonInventory"><span class="glyphicon glyphicon-book" title="Inventar"></span></a>
-					</li>
-				</ul>
-				
-				<div class="pull-right">
-					<table>
-						<tr>
-							<th>LVL: </th>
-							<td>
-								<span id="lvl">1</span>
-							</td>
-							
-							<td>&emsp;&emsp;</td>
-							
-							<th>EXP: </th>
-							<td class="text-center">
-								<span id="actEXP">0</span>
-							</td>
-						</tr>
-						<tr>
-							<th>GOLD: </th>
-							<td>
-								<span id="gold">0</span>
-							</td>
-							
-							<td>&emsp;&emsp;</td>
-							
-							<th>TP: </th>
-							<td style="min-width: 100px;">
-								<div class="progress">
-									<div class="progress-text">
-										<span id="actTP">100</span> / <span id="maxTP">100</span>
-									</div>
-									<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="col-xs-6">
+			<?php if($device->isDesktop()): ?>
 				<ul class="nav nav-pills navbar-right">
 					<li class="">
-						<a class="navButton" id="buttonSettings"><span class="glyphicon glyphicon-cog" title="Einstellungen"></span></a>
-					</li>
-					<li class="">
-						<a class="navButton" id="buttonHighscore"><span class="glyphicon glyphicon-king" title="Highscore"></span></a>
-					</li>
-					<li class="">
-						<a class="navButton" id="buttonHelp"><span class="glyphicon glyphicon-question-sign" title="Hilfe"></span></a>
+						<a class="navButton" id="buttonMobileNavHamburger"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
 					</li>
 				</ul>
-			</div>
+				<div class="collapsed" id="game-navigation-collapse">
+					<ul class="nav nav-stacked">
+						<li>
+							<table>
+								<tr>
+									<th>LVL: </th>
+									<td class="text-right">
+										<span id="lvl">1</span>
+									</td>
+								</tr>
+								<tr>
+									<th>EXP: </th>
+									<td class="text-right">
+										<span id="actEXP">0</span>
+									</td>
+								</tr>
+								<tr>
+									<th>GOLD: </th>
+									<td class="text-right">
+										<span id="gold">0</span>
+									</td>
+								</tr>
+								<tr>
+									<th>TP: </th>
+									<td style="min-width: 100px;">
+										<div class="progress">
+											<div class="progress-text">
+												<span id="actTP">100</span> / <span id="maxTP">100</span>
+											</div>
+											<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</li>
+						<li class="text-left">
+							<a class="navButton" id="buttonAccount"><span class="glyphicon glyphicon-user" title="Account"></span> Account</a>
+						</li>
+						<li class="text-left">
+							<a class="navButton" id="buttonInventory"><span class="glyphicon glyphicon-book" title="Inventar"></span> Inventar</a>
+						</li>
+						<li class="text-left">
+							<a class="navButton" id="buttonSettings"><span class="glyphicon glyphicon-cog" title="Einstellungen"></span> Einstellungen</a>
+						</li>
+						<li class="text-left">
+							<a class="navButton" id="buttonHighscore"><span class="glyphicon glyphicon-king" title="Highscore"></span> Highscore</a>
+						</li>
+						<li class="text-left">
+							<a class="navButton" id="buttonHelp"><span class="glyphicon glyphicon-question-sign" title="Hilfe"></span> Hilfe</a>
+						</li>
+					</ul>
+				</div>
+				<!--
+				<div class="col-xs-6">
+					<ul class="nav nav-pills navbar-left">
+						<li class="">
+							<a class="navButton" id="buttonAccount"><span class="glyphicon glyphicon-user" title="Account"></span></a>
+						</li>
+						<li class="">
+							<a class="navButton" id="buttonInventory"><span class="glyphicon glyphicon-book" title="Inventar"></span></a>
+						</li>
+					</ul>
+					
+					<div class="pull-right">
+						<table>
+							<tr>
+								<th>LVL: </th>
+								<td>
+									<span id="lvl">1</span>
+								</td>
+								
+								<td>&emsp;&emsp;</td>
+								
+								<th>EXP: </th>
+								<td class="text-center">
+									<span id="actEXP">0</span>
+								</td>
+							</tr>
+							<tr>
+								<th>GOLD: </th>
+								<td>
+									<span id="gold">0</span>
+								</td>
+								
+								<td>&emsp;&emsp;</td>
+								
+								<th>TP: </th>
+								<td style="min-width: 100px;">
+									<div class="progress">
+										<div class="progress-text">
+											<span id="actTP">100</span> / <span id="maxTP">100</span>
+										</div>
+										<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<ul class="nav nav-pills navbar-right">
+						<li class="">
+							<a class="navButton" id="buttonSettings"><span class="glyphicon glyphicon-cog" title="Einstellungen"></span></a>
+						</li>
+						<li class="">
+							<a class="navButton" id="buttonHighscore"><span class="glyphicon glyphicon-king" title="Highscore"></span></a>
+						</li>
+						<li class="">
+							<a class="navButton" id="buttonHelp"><span class="glyphicon glyphicon-question-sign" title="Hilfe"></span></a>
+						</li>
+					</ul>
+				</div>
+				-->
+			<?php elseif($device->isMobile() || $device->isTablet()): ?>
+				
+			<?php endif; ?>
 		</div>
 	</div>
 	<div id="game-popup-background"></div>
