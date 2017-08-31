@@ -1,6 +1,9 @@
 $(function(){
+	
+	// Create new player window
 	$('body').append('<div id="game-new-player"><div class="content"></div></div>');
 	
+	// Style player window
 	$('#game-new-player').css({
 		position: 			'fixed',
 		left: 				'0px',
@@ -14,6 +17,7 @@ $(function(){
 		paddingTop: 		'50vh'
 	});
 	
+	// Style player wnidow content
 	$('#game-new-player .content').css({
 			width: 			'50vw', 
 			minWidth: 		'300px', 
@@ -27,6 +31,7 @@ $(function(){
 		overflow: 			'auto'
 	});
 	
+	// Fill player window content
 	$('#game-new-player .content').html(
 		'<h2>Neues Spiel</h2>' + 
 		'<label for="player-name">Wähle zunächst einen eigenen Spielernamen für deinen Helden aus:</label>' + 
@@ -37,7 +42,7 @@ $(function(){
 		'</div>'
 	);
 	
-	// Spiel starten click
+	// Click start game
 	$(document).on('click', '#game-new-player .content button.btn', function(e){
 		e.preventDefault();
 		
@@ -45,12 +50,16 @@ $(function(){
 		
 		// Check if name is valid
 		if(name.length > 3 && !(name.includes(',')) && name.search(/[a-zA-Z0-9]$/) != -1){
+			
+			// Hide player window content
 			$('#game-new-player .content').slideUp(400);
+			
+			// Hide player window
 			$('#game-new-player').fadeOut(400, function(){
 				$('#game-new-player').detach();
 			});
 			
-			// Update player
+			// Update player database
 			$.ajax({
 				type: 		'post', 
 				url: 		'ajax/setName.ajax.php', 

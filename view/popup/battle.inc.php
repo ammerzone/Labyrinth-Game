@@ -65,7 +65,9 @@ echo '<div id="battle-report">';
 	}
 echo '</div>';
 
+// Check if battle was lost
 if($result === 'lose'){
+	
 	// Reset hero stats and equip and items
 	$player->edit(
 		array(
@@ -92,7 +94,9 @@ if($result === 'lose'){
 	echo '<button id="btn-lose">Zur&uuml;ck zum Spiel</button>';
 }
 
+// Check if battle was won
 if($result === 'win'){
+	
 	// Update hero exp, gold, tp
 	$player->edit(
 		array(

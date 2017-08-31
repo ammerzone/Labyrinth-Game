@@ -14,7 +14,7 @@ if($session === NULL){
 
 $player = new Player($session, '../../media/game');
 
-// get data
+// get player data
 $data = $player->get();
 ?>
 

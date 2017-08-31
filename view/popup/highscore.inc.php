@@ -3,6 +3,7 @@ require('autoload.php');
 
 $highscore = new Highscore('../../media/game');
 
+// Get highscore data
 $data = $highscore->get();
 ?>
 

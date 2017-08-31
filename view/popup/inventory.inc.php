@@ -15,10 +15,12 @@ if($session === NULL){
 $player = new Player($session, '../../media/game');
 $items = new Item('../../media/game');
 
+// Get player data
 $data = $player->get();
 
 $inventory = array();
 
+// Get inventory data
 if(isset($data['items'])){
 	if(is_array($data['items'])){
 		$inventory = $data['items'];
