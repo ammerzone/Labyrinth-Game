@@ -5,7 +5,7 @@ Welcome to the Labyrinth Game!
 This is a simple HTML5 game using CANVAS and AJAX. Tested and developed in Google Chrome only so far.
 
 # Game description
-First, you enter your players name for starting a new game. You can move across the map using your arrow keys or "wasd"-Keys. While moving there, you can collect items and beat monsters. 
+First, you enter your players' name for starting a new game. You can move across the map using your arrow keys or "wasd"-Keys. While moving there, you can collect items and beat monsters. 
 In the navigation you always can have a look at your account and inventory or the settings, highscore and help. 
 The goal is to find the escape point to port into a new labyrinth.
 
