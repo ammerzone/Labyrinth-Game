@@ -162,6 +162,15 @@ body{
 	padding-right: 	15px;
 }
 
+#game-navigation-collapse{
+	position: 		fixed;
+	bottom: 		0px;
+	left: 			0px;
+	padding: 		10px;
+	width: 			250px;
+	background: 	#222222;
+}
+
 .collapsed{
 	display: none;
 }

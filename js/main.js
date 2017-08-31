@@ -71,7 +71,7 @@ window.input = {
 $(function(){
 	
 	// Toggle mobile navigation
-	$('#buttonMobileNavHamburger').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonMobileNavHamburger').on((isMobile ? 'tap' : 'click'), function(e){
 		
 		// Check if navigation is visible
 		if($('#game-navigation-collapse').is(":visible")){
@@ -82,12 +82,8 @@ $(function(){
 			
 			// Positionate Navigation
 			$('#game-navigation-collapse').css({
-				position: 	'fixed', 
 				bottom: 	'60px', 
-				padding: 	'10px', 
-				width: 		'250px', 
-				left: 		$('#buttonMobileNavHamburger').offset().left + 'px', 
-				background: '#222222'
+				left: 		(($('#buttonMobileNavHamburger').offset().left + $('#buttonMobileNavHamburger').innerWidth()) - 250) + 'px'
 			});
 			
 			// Show navigation
@@ -96,7 +92,7 @@ $(function(){
 	});
 	
 	// Open account window
-	$('#buttonAccount').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonAccount').on((isMobile ? 'tap' : 'click'), function(e){
 		e.preventDefault();
 		
 		$('#game-navigation-collapse').hide();
@@ -124,7 +120,7 @@ $(function(){
 	});
 	
 	// Open inventory window
-	$('#buttonInventory').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonInventory').on((isMobile ? 'tap' : 'click'), function(e){
 		e.preventDefault();
 		
 		$('#game-navigation-collapse').hide();
@@ -152,7 +148,7 @@ $(function(){
 	});
 	
 	// Open settings window
-	$('#buttonSettings').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonSettings').on((isMobile ? 'tap' : 'click'), function(e){
 		e.preventDefault();
 		
 		$('#game-navigation-collapse').hide();
@@ -179,7 +175,7 @@ $(function(){
 	});
 	
 	// Open highscore window
-	$('#buttonHighscore').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonHighscore').on((isMobile ? 'tap' : 'click'), function(e){
 		e.preventDefault();
 		
 		$('#game-navigation-collapse').hide();
@@ -206,7 +202,7 @@ $(function(){
 	});
 	
 	// Open help window
-	$('#buttonHelp').on((isMobile ? 'touchend' : 'click'), function(e){
+	$('#buttonHelp').on((isMobile ? 'tap' : 'click'), function(e){
 		e.preventDefault();
 		
 		$('#game-navigation-collapse').hide();
@@ -221,7 +217,7 @@ $(function(){
 		e.preventDefault();
 		
 		mobileMoving = 'up';
-	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'tap' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
@@ -230,7 +226,7 @@ $(function(){
 		e.preventDefault();
 		
 		mobileMoving = 'left';
-	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'tap' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
@@ -239,7 +235,7 @@ $(function(){
 		e.preventDefault();
 		
 		mobileMoving = 'right';
-	}).on((isMobile ? 'touchend' : 'mouseup'), function(){
+	}).on((isMobile ? 'tap' : 'mouseup'), function(){
 		mobileMoving = null;
 	});
 	
@@ -248,12 +244,12 @@ $(function(){
 		e.preventDefault();
 		
 		mobileMoving = 'down';
-	}).on((isMobile ? 'touchend' : 'mouseup mouseleave'), function(){
+	}).on((isMobile ? 'tap' : 'mouseup mouseleave'), function(){
 		mobileMoving = null;
 	});
 	
 	// Close popup window
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-popup .buttonClose, #game-popup-background', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-popup .buttonClose, #game-popup-background', function(e){
 		e.preventDefault();
 		
 		$('#game-popup-background').hide();
@@ -264,7 +260,7 @@ $(function(){
 	});
 	
 	// Select item from Inventory
-	$(document).on((isMobile ? 'touchend' : 'click'), '.inventory-select', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '.inventory-select', function(e){
 		e.preventDefault();
 		
 		// Update file + html from database
@@ -291,7 +287,7 @@ $(function(){
 	});
 	
 	// Delete item from inventory
-	$(document).on((isMobile ? 'touchend' : 'click'), '.inventory-delete', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '.inventory-delete', function(e){
 		e.preventDefault();
 		
 		var item = $(this).attr('data-item');
@@ -320,7 +316,7 @@ $(function(){
 	});
 	
 	// Button to start collecting item
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-item-collect', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-help #game-item-collect', function(e){
 		e.preventDefault();
 		
 		var x = $(this).attr('data-x');
@@ -339,7 +335,7 @@ $(function(){
 	});
 	
 	// Button to start battle
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-start-battle', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-help #game-start-battle', function(e){
 		e.preventDefault();
 		
 		// Start battle procedure
@@ -353,7 +349,7 @@ $(function(){
 	});
 	
 	// Button to start level up
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help #game-next-level', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-help #game-next-level', function(e){
 		e.preventDefault();
 		
 		// Delete map, then add map
@@ -375,7 +371,7 @@ $(function(){
 	});
 	
 	// Close help window
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-help-background, #game-help .buttonClose', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-help-background, #game-help .buttonClose', function(e){
 		e.preventDefault();
 		
 		// Check if no batte, item collection or level up is open
@@ -479,7 +475,7 @@ $(function(){
 	});
 
 	// Close battle window after havin won it
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-battleground .content #btn-win', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-battleground .content #btn-win', function(e){
 		e.preventDefault();
 		
 		if($(this).attr('data-x') != 'undefined' && $(this).attr('data-x') != 'undefined'){
@@ -559,7 +555,7 @@ $(function(){
 	});
 	
 	// Close battle window after having lost it
-	$(document).on((isMobile ? 'touchend' : 'click'), '#game-battleground .content #btn-lose', function(e){
+	$(document).on((isMobile ? 'tap' : 'click'), '#game-battleground .content #btn-lose', function(e){
 		e.preventDefault();
 		
 		// Set exp and gold to 0
