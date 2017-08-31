@@ -17,18 +17,18 @@ $(function(){
 		paddingTop: 		'50vh'
 	});
 	
-	// Style player wnidow content
+	// Style player window content
 	$('#game-new-player .content').css({
-			width: 			'50vw', 
-			minWidth: 		'300px', 
-			margin: 		'auto', 
-		    marginTop: 		'-20vh',
-			height: 		'40vh',
+			width: 			'100vw', 
+			margin: 		'0px', 
+		    marginTop: 		'-45vh',
+			height: 		'90vh',
 			background: 	'#DDDDDD',
 			padding: 		'0px',
 			border: 		'2px solid #DDDDDD',
 			borderRadius: 	'5px', 
-		overflow: 			'auto'
+			overflow: 		'auto', 
+			fontSize: 		'1em'
 	});
 	
 	// Fill player window content
