@@ -1,4 +1,7 @@
 <?php
+define('LAB_HEIGHT', 25);
+define('LAB_WIDTH', 35);
+
 /**
 * Administration for the actual map data (file)
 * Operations: Add, Edit, Get, Delete
@@ -55,8 +58,8 @@ class Map{
 		$this->file = $path . '/map/';
 		$this->path = $path;
 		$this->lab = array(
-			'width' => 		5, 
-			'height' => 	5, 
+			'width' => 		LAB_WIDTH,  
+			'height' => 	LAB_HEIGHT, 
 			'ground' => 	array(0, 1, 2, 3, 4, 5), 
 			'wall' => 		array(0), 
 			'start' => 		array(
