@@ -18,7 +18,7 @@ The goal is to find the escape point to port into a new labyrinth.
 Change labyrinth size: Go to the file 'oop/Map.class.php' and change the constants MAP_HEIGHT and MAP_WIDTH to the amount of fields you want to have. Warning: A size with more than 50 * 50 Fields could make the creation of the map very slow.
 
 # Usage examples
-Check out my [live version](http://jules-rau.de/projects/labyrinth) for getting a first impression.
+Check out my [live version](http://jules-rau.de/projekte/labyrinth) for getting a first impression.
 
 # Licensing
 Labyrinth Game is licensed under the [Apache-2.0 license](https://github.com/ammerzone/Labyrinth-Game/blob/master/LICENSE.md)
